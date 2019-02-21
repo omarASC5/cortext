@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Page Title</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="/main.css">
+	<!-- <script src="main.js"></script> -->
+</head>
+<body>
+		<%response.articles.forEach((article) => { %>
+			<div>
+				<p>Title: <%=article.title%></p>
+				<p>Author: <%=article.author%></p>
+				<p>Published: <%=article.publishedAt.slice(0, 10)%></p>
+				<p>Description: <%=article.description%></p>
+				<p>Source: <%=article.source.name%></p>
+				<p>Link to original article: <a href="<%=article.url%>"><%=article.url%></a></p>
+				<p><img src="<%=article.urlToImage%>"></p>
+			</div>
+		<% }); %>
+</body>
+</html>

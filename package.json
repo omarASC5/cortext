@@ -1,0 +1,23 @@
+{
+  "name": "news-bias-sentiment-analysis",
+  "version": "1.0.0",
+  "description": "A website that helps detect the bias of news article.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/omarASC5/news-bias-sentiment-analysis.git"
+  },
+  "author": "Omar Cobas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/omarASC5/news-bias-sentiment-analysis/issues"
+  },
+  "homepage": "https://github.com/omarASC5/news-bias-sentiment-analysis#readme",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.4"
+  }
+}
