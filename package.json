@@ -19,6 +19,7 @@
   "dependencies": {
     "article-parser": "^2.4.0",
     "body-parser": "^1.18.3",
+    "compromise": "^11.13.1",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "request": "^2.88.0"

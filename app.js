@@ -3,7 +3,7 @@ const express      = require("express"),
 		ejs        = require("ejs"),
 		keys       = require("./config/keys.js"),
 		request    = require("request"),
-		cheerio    = require("cheerio"),
+		compromise = require("compromise"),
 		bodyParser = require("body-parser");
 
 
@@ -23,18 +23,6 @@ app.get("/index", (req, res, next) => {
 
 
 app.post("/index", (req, res, next) => {
-	// console.log(req.body.url);
-	// 	request(req.body.url, (err, res, html) => {
-	// 	if (!err && res.statusCode === 200) {
-	// 		const $ = cheerio.load(html);
-	// 		// const siteHeading = $(".css-1ygdjhk");
-	// 		// const output = siteHeading.find("h1").text();
-	// 		console.log($.html());
-	// 	} else {
-	// 		console.log(err);
-	// 	}
-	// });
-
 	const {
 		extract 
 	  } = require('article-parser');
@@ -42,7 +30,9 @@ app.post("/index", (req, res, next) => {
 	  let url = req.body.url;
 	   
 	  extract(url).then((article) => {
-		console.log(article);
+		//   console.log(article.content);
+		  const nlpArticle = nlp(article.content);
+		  console.log(nlpArticle.adjectives().out("text"));
 	  }).catch((err) => {
 		console.log(err);
 	  });
