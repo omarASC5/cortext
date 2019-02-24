@@ -55,7 +55,6 @@ app.post("/index", (req, res, next) => {
 			res.render("new", {
 				article: article}); //Must be an object
 
-			console.log(article)
 	  }).catch((err) => {
 		console.log(err);
 	  });

@@ -9,14 +9,31 @@
 		<!-- <script src="main.js"></script> -->
 	</head>
 	<body>
-		<%  const nlpArticle = nlp(article.content); %>
-		<%	const textArray = (nlpArticle.sentences().data()).map((index) => { %>
+
+		<!-- Title of the article. -->
+		<h2><%=article.title%></h2>
+
+		<!-- Time article was published. -->
+		<p><%=article.publishedTime%></p>
+
+		<!-- Author of article -->
+		<p><%=article.author%></p>
+
+		<!-- Source Website -->
+		<p><%=article.source%></p>
+
+		<!-- Some code -->
+		<%	const textArray = (nlp(article.content).sentences().data()).map((index) => { %>
 		<% 		return index.text %>
 		<%		}); %>
 
-
+		<!-- Article arraigened by contenet. -->
 		<% textArray.forEach((sentence) => { %>
 			<p><%=sentence%></p>
 		<% }); %>
+
+		<!-- URL of article. -->
+		<a href="<%= article.url%>"><%= article.url%></a>
+
 	</body>
 </html>
