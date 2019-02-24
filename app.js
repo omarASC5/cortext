@@ -31,23 +31,6 @@ app.post("/index", (req, res, next) => {
 		  const articleInTextForm = articleInHTMLForm.replace(/<\/?[^>]+(>|$)/g, "");
 		//   console.log(articleInTextForm);
 		  const nlpArticle = nlp(articleInTextForm);
-			// const textArray = (nlpArticle.sentences().data()).map((index) => {
-			// 	return index.text
-			// 	});
-
-		//   console.log(textArray);
-
-		// res.send(articleInHTMLForm);
-
-		// res.render('index', function(err, nlpArticle) {
-		// 	res.send(nlpArticle);
-		// });
-		
-		// res.redirect("/", 
-		// 	{
-		// 	hi: "hi",
-		// 	articleInHTMLForm: articleInHTMLForm
-		// 	});
 		return nlpArticle;
 	  }).then((article) => {
 			res.render("new", 
