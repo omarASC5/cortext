@@ -20,8 +20,6 @@ app.get("/index", (req, res, next) => {
 	res.render("index");
 })
 
-
-
 app.post("/index", (req, res, next) => {
 	const {
 		extract 
@@ -30,9 +28,11 @@ app.post("/index", (req, res, next) => {
 	  let url = req.body.url;
 	   
 	  extract(url).then((article) => {
-		//   console.log(article.content);
-		  const nlpArticle = nlp(article.content);
-		  console.log(nlpArticle.adjectives().out("text"));
+		  const articleInHTMLForm = article.content;
+		  const articleInTextForm = articleInHTMLForm.replace(/<\/?[^>]+(>|$)/g, "");
+		//   console.log(articleInTextForm);
+		  const nlpArticle = nlp(articleInTextForm);
+		  console.log(nlpArticle.sentences().out("text"));
 	  }).catch((err) => {
 		console.log(err);
 	  });
