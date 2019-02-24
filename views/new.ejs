@@ -1,0 +1,7 @@
+<% const textArray = (nlpArticle.sentences().data()).map((index) => { %>
+<%	return index.text %>
+<%	}); %>
+
+<% textArray.forEach((sentence) => { %>
+	<p><%=sentence%></p>
+<% }); %>

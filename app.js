@@ -26,17 +26,41 @@ app.post("/index", (req, res, next) => {
 	  } = require('article-parser');
 	   
 	  let url = req.body.url;
-	   
 	  extract(url).then((article) => {
 		  const articleInHTMLForm = article.content;
 		  const articleInTextForm = articleInHTMLForm.replace(/<\/?[^>]+(>|$)/g, "");
 		//   console.log(articleInTextForm);
 		  const nlpArticle = nlp(articleInTextForm);
-		  console.log(nlpArticle.sentences().out("text"));
+			// const textArray = (nlpArticle.sentences().data()).map((index) => {
+			// 	return index.text
+			// 	});
+
+		//   console.log(textArray);
+
+		// res.send(articleInHTMLForm);
+
+		// res.render('index', function(err, nlpArticle) {
+		// 	res.send(nlpArticle);
+		// });
+		
+		// res.redirect("/", 
+		// 	{
+		// 	hi: "hi",
+		// 	articleInHTMLForm: articleInHTMLForm
+		// 	});
+		return nlpArticle;
+	  }).then((article) => {
+			res.render("new", 
+						{
+						hi: "hi",
+						nlpArticle: article
+						});
+
+			// console.log(article)
 	  }).catch((err) => {
 		console.log(err);
 	  });
-	res.send("Hi")
+
 });
 
 app.listen(keys.PORT, () => {
