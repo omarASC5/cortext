@@ -28,7 +28,7 @@ app.post("/index", (req, res, next) => {
 	  let url = req.body.url;
 	  extract(url).then((article) => {
 		  const articleInHTMLForm = article.content;
-		  const articleInTextForm = articleInHTMLForm.replace(/<\/?[^>]+(>|$)/g, "");
+		  const articleInTextForm = articleInHTMLForm.replace(/<\/?[^>]+(>|$)/g, " ");
 		//   console.log(articleInTextForm);
 		  const nlpArticle = nlp(articleInTextForm);
 		return nlpArticle;
