@@ -9,31 +9,31 @@
 		<!-- <script src="main.js"></script> -->
 	</head>
 	<body>
-
-		<!-- Title of the article. -->
-		<h2><%=article.title%></h2>
-
-		<!-- Time article was published. -->
-		<p><%=article.publishedTime%></p>
-
-		<!-- Author of article -->
-		<p><%=article.author%></p>
-
-		<!-- Source Website -->
-		<p><%=article.source%></p>
-
-		<!-- Some code -->
-		<%	const textArray = (nlp(article.content).sentences().data()).map((index) => { %>
-		<% 		return index.text %>
-		<%		}); %>
-
-		<!-- Article arraigened by contenet. -->
-		<% textArray.forEach((sentence) => { %>
-			<p><%=sentence%></p>
-		<% }); %>
-
-		<!-- URL of article. -->
-		<a href="<%= article.url%>"><%= article.url%></a>
-
+		<article>
+			<!-- Title of the article. -->
+			<h2><%=article.title%></h2>
+	
+			<!-- Time article was published. -->
+			<p><%=article.publishedTime%></p>
+	
+			<!-- Author of article -->
+			<p><%=article.author%></p>
+	
+			<!-- Source Website -->
+			<p><%=article.source%></p>
+	
+			<!-- Returns and displays an array of sentences run through Compromise.js -->
+			<%	const textArray = (nlp(article.content).sentences().data()).map((index) => { %>
+			<% 		return index.text %>
+			<%		}); %>
+	
+			<!-- Article arranged by content. -->
+			<% textArray.forEach((sentence) => { %>
+				<p><%=sentence%></p>
+			<% }); %>
+	
+			<!-- URL of article. -->
+			<a href="<%=article.url%>"><%= article.url%></a>
+		</article>
 	</body>
 </html>

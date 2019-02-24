@@ -6,25 +6,28 @@ const express      = require("express"),
 		compromise = require("compromise"),
 		bodyParser = require("body-parser");
 
+app.set("view engine", "ejs"); // Rendering engine defined as EJS
+app.use(express.static(__dirname + '/public')); // Tells express, CSS is in public folder
+app.use(bodyParser.urlencoded({extended: true})); // bodyParser config
 
-app.set("view engine", "ejs");
-app.use(express.static(__dirname + '/public'));
-app.use(bodyParser.urlencoded({extended: true}));
-
-
+// Index Route, redirects to display homepage
 app.get("/", (req, res, next) => {
 	res.redirect("index");
 });
 
+// Renders the index page
 app.get("/index", (req, res, next) => {
 	res.render("index");
 })
 
+// Post route, the forms sends a URL to be exported as an object with article feautures 
 app.post("/index", (req, res, next) => {
+	// Initializes article-parser, which helps parse articles into object forme
 	const {
 		extract 
 	  } = require('article-parser');
 	   
+	//   User-entered URL
 	  let url = req.body.url;
 	  extract(url).then((article) => {
 		  const articleInHTMLForm = article.content;
@@ -32,12 +35,10 @@ app.post("/index", (req, res, next) => {
 				.replace(/<\/?[^>]+(>|$)/g, " ") //Replaces the Tags and leaves a space.
 				.replace(/  +/g, " ") //Replaces double spaces and leaves a single.
 				.replace(/ \.+/g, "."); //Replaces the space between a word and the period to end a sentence.
-			//const nlpArticle = nlp(articleInTextForm);
-			//console.log(article);
-			//title, publishedTime, author, source, content, url,
 
+			//title, publishedTime, author, source, content, url,
 			//Formatts all of the neccesary inforamtion into one object
-			const articleFormatting ={
+			const articleFormatting = {
 				title: article.title,
 				publishedTime: article.publishedTime,
 				author: article.author,
@@ -46,21 +47,15 @@ app.post("/index", (req, res, next) => {
 				url: article.url
 			};
 
-	 		// const textArray = (articleFormatting.content.sentences().data()).map((index) => { 
-			// return index.text
-			// }); 
-
 		return articleFormatting;
 	  }).then((article) => {
-			res.render("new", {
-				article: article}); //Must be an object
-
+			res.render("new", { article: article }); //Must be an object
 	  }).catch((err) => {
 		console.log(err);
 	  });
-
 });
 
+// Server Setup/Initialization
 app.listen(keys.PORT, () => {
 	console.log(`Server running on port ${keys.PORT}!`);
 });
