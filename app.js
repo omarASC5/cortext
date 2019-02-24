@@ -52,9 +52,10 @@ app.post("/index", (req, res, next) => {
 
 		return articleFormatting;
 	  }).then((article) => {
-			res.render("new", article);
+			res.render("new", {
+				article: article}); //Must be an object
 
-			// console.log(article)
+			console.log(article)
 	  }).catch((err) => {
 		console.log(err);
 	  });
