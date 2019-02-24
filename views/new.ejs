@@ -9,9 +9,10 @@
 		<!-- <script src="main.js"></script> -->
 	</head>
 	<body>
-		<% const textArray = (nlpArticle.sentences().data()).map((index) => { %>
-		<%	return index.text %>
-		<%	}); %>
+		<% const textArray = (nlp(article.content).sentences().data()).map((index) => { %>
+		<% 		return index.text %>
+		<%		}); %>
+
 
 		<% textArray.forEach((sentence) => { %>
 			<p><%=sentence%></p>

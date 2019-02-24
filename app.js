@@ -28,16 +28,31 @@ app.post("/index", (req, res, next) => {
 	  let url = req.body.url;
 	  extract(url).then((article) => {
 		  const articleInHTMLForm = article.content;
-		  const articleInTextForm = articleInHTMLForm.replace(/<\/?[^>]+(>|$)/g, " ");
-		//   console.log(articleInTextForm);
-		  const nlpArticle = nlp(articleInTextForm);
-		return nlpArticle;
+			const articleInTextForm = articleInHTMLForm
+				.replace(/<\/?[^>]+(>|$)/g, " ") //Replaces the Tags and leaves a space.
+				.replace(/  +/g, " ") //Replaces double spaces and leaves a single.
+				.replace(/ \.+/g, "."); //Replaces the space between a word and the period to end a sentence.
+			//const nlpArticle = nlp(articleInTextForm);
+			//console.log(article);
+			//title, publishedTime, author, source, content, url,
+
+			//Formatts all of the neccesary inforamtion into one object
+			const articleFormatting ={
+				title: article.title,
+				publishedTime: article.publishedTime,
+				author: article.author,
+				source: article.source,
+				content: articleInTextForm,
+				url: article.url
+			};
+
+	 		// const textArray = (articleFormatting.content.sentences().data()).map((index) => { 
+			// return index.text
+			// }); 
+
+		return articleFormatting;
 	  }).then((article) => {
-			res.render("new", 
-						{
-						hi: "hi",
-						nlpArticle: article
-						});
+			res.render("new", article);
 
 			// console.log(article)
 	  }).catch((err) => {
