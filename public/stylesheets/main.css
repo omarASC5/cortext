@@ -1,4 +1,26 @@
 form {
-	height: 15rem;
-	background: rgba(120, 200, 150, 0.6);
+	height: 20rem;
+	/* width: 50em; */
+	background: rgba(120, 149, 200, 0.4);
 }
+
+.jumbotron {
+	background: white;
+}
+
+html, body {
+
+}
+
+.tinted-image {
+	background:
+	  linear-gradient(rgba(42, 38, 61, 0.70),
+	  rgba(42, 38, 61, 0.70)),
+	  url("http://www.tendenza.eu/images/background-patterns/body-bg-32.jpg");
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
+	-o-background-size: cover;
+	background-position: top;
+	/* min-height: 70vmin; */
+  }

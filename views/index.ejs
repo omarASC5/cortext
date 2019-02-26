@@ -1,52 +1,55 @@
 <%- include partials/header.ejs %>
 
-<!-- Header Container: Title & Short Description -->
-<header class="container jumbotron">
-	<h1 class="display-1 text-center">Bias Tester <!--<img src="https://go.forrester.com/wp-content/uploads/2011/11/bt_logo_0.png" alt="Bias Tester Logo">--></h1>
-	<p class="lead"> 
-		More and more people call certain news articles and sources biased. 
-		Others call some "fake news" (Like Señor Trump). Our website is designed 
-		to be a part of that conversation.
-	</p>
-</header>
+<body class="tinted-image">
 
-<!-- Submit News Link Container -->
-<main class="container">
-	<div class="form-group">
-		<form action="/index" method="POST" class="d-flex justify-content-center flex-column">
-			<p>News Article URL: 
-				<a href="https://www.cnn.com/2019/02/25/politics/alva-johnson-donald-trump-lawsuit/index.html">
-					https://www.cnn.com/2019/02/25/politics/alva-johnson-donald-trump-lawsuit/index.html
-				</a>
-			</p>
-			<input type="text" name="url" id="url" class="form-control form-control-lg" placeholder="Paste News Article URL...">
-			<button class="w-50 btn btn-primary mt-4 mb-3 align-self-center">Analyze</button>
-			<small class="w-100 text-center">Thanks!</small>
-		</form>
-	</div>
-
-	<!-- How it Works? Container -->
-	<article>
-		<h2 class="h2">How it Works?</h2>
-		<ol>
-			<li>We parse the website, extracting the article</li>
-			<li>We process key words and phrases using <a href="http://www.compromise.cool">compromise.cool</a></li>
-			<li>Using that information, we rank each sentence as positive, neutral, or negative</li>
-		</ol>
-	</article>
-</main>
-
-
-<!-- Social Media Container -->
-<footer class="container">
-	<div>
-		<button>Twitter</button>
-		<button>Facebook</button>
-	</div>
-	<!-- Copyright Container -->
-	<div class="text-center">
-		<small>&copy Copyright 2019 - Bias Tester -biastester.com</small>
-	</div>
-</footer>
+	<!-- Header Container: Title & Short Description -->
+	<header class="container jumbotron tinted-image">
+		<h1 class="display-1 text-center">Bias Tester <!--<img src="https://go.forrester.com/wp-content/uploads/2011/11/bt_logo_0.png" alt="Bias Tester Logo">--></h1>
+		<p class="lead"> 
+			More and more people call certain news articles and sources biased. 
+			Others call some "fake news" (Like Señor Trump). Our website is designed 
+			to be a part of that conversation.
+		</p>
+	</header>
+	
+	<!-- Submit News Link Container -->
+	<main class="container px-0">
+		<div class="form-group">
+			<form action="/index" method="POST" class="d-flex justify-content-center align-items-center flex-column">
+				<p>News Article URL: 
+					<a href="https://www.cnn.com/2019/02/25/politics/alva-johnson-donald-trump-lawsuit/index.html">
+						https://www.cnn.com/2019/02/25/politics/alva-johnson-donald-trump-lawsuit/index.html
+					</a>
+				</p>
+				<input type="text" name="url" id="url" class="form-control form-control-lg w-50" placeholder="Paste News Article URL...">
+				<button class="w-50 btn btn-primary mt-4 mb-3">Analyze</button>
+				<small class="w-100 text-center">Thanks!</small>
+			</form>
+		</div>
+	
+		<!-- How it Works? Container -->
+		<article>
+			<h2 class="h2">How it Works?</h2>
+			<ol>
+				<li>We parse the website, extracting the article</li>
+				<li>We process key words and phrases using <a href="http://www.compromise.cool">compromise.cool</a></li>
+				<li>Using that information, we rank each sentence as positive, neutral, or negative</li>
+			</ol>
+		</article>
+	</main>
+	
+	
+	<!-- Social Media Container -->
+	<footer class="container">
+		<div>
+			<button>Twitter</button>
+			<button>Facebook</button>
+		</div>
+		<!-- Copyright Container -->
+		<div class="text-center">
+			<small>&copy Copyright 2019 - Bias Tester -biastester.com</small>
+		</div>
+	</footer>
+</body>
 
 <%- include partials/footer.ejs %>
