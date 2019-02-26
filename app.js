@@ -8,6 +8,7 @@ const express      = require("express"),
 
 app.set("view engine", "ejs"); // Rendering engine defined as EJS
 app.use(express.static(__dirname + '/public')); // Tells express, CSS is in public folder
+app.set("views", "views"); // Tells EJS the path to the "views" directory
 app.use(bodyParser.urlencoded({extended: true})); // bodyParser config
 
 // Index Route, redirects to display homepage
