@@ -20,6 +20,7 @@
 			<!-- Article arranged by content. -->
 			<% textArray.forEach((sentence) => { %>
 				<p><%=sentence%></p>
+				<p><%=sentiment.analyze(sentence);%></p>
 			<% }); %>
 	
 			<!-- URL of article. -->
