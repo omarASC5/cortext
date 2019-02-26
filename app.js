@@ -5,13 +5,14 @@ const express      = require("express"),
 		request    = require("request"),
 		compromise = require("compromise"),
 		bodyParser = require("body-parser"),
-		Sentiment = require('sentiment');
+		Sentiment = require('sentiment'),
+		sentiment = new Sentiment();
 
 app.set("view engine", "ejs"); // Rendering engine defined as EJS
 app.use(express.static(__dirname + '/public')); // Tells express, CSS is in public folder
 app.set("views", "views"); // Tells EJS the path to the "views" directory
 app.use(bodyParser.urlencoded({extended: true})); // bodyParser config
-const sentiment = new Sentiment();// Set's up thing for sentiment
+// const sentiment = new Sentiment(); // Set's up thing for sentiment
 
 // Index Route, redirects to display homepage
 app.get("/", (req, res, next) => {
@@ -51,11 +52,8 @@ app.post("/index", (req, res, next) => {
 			};
 
 		return articleFormatting;
-		}).then((article) => {			
-			var result = sentiment.analyze(article.title);
-			console.log(result);
 		}).then((article) => {
-			res.render("new", { article: article }); //Must be an object
+			res.render("new", { article: article, Sentiment: Sentiment }); //Must be an object
 	  }).catch((err) => {
 		console.log(err);
 	  });

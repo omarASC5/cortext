@@ -20,8 +20,11 @@
 			<!-- Article arranged by content. -->
 			<% textArray.forEach((sentence) => { %>
 				<p><%=sentence%></p>
-				<p><%=sentiment.analyze(sentence);%></p>
-			<% }); %>
+				<% }); %>
+
+				<% const sentiment = new Sentiment() %>
+				<% var result = sentiment.analyze(article.title); %>
+				<% console.log(result); %>
 	
 			<!-- URL of article. -->
 			<a href="<%=article.url%>"><%= article.url%></a>
