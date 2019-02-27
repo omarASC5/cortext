@@ -1,7 +1,7 @@
 form {
 	height: 20rem;
-	/* width: 50em; */
 	background: rgba(120, 149, 200, 0.4);
+	border-radius: 1rem;
 }
 
 .jumbotron {
@@ -18,6 +18,10 @@ li {
 
 span {
 	color: rgba(255, 206, 0, 1);
+}
+
+h2 {
+	font-weight: 300 !important;
 }
 
 .example-link {
