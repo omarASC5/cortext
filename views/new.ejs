@@ -1,5 +1,6 @@
 <%- include partials/header.ejs %>
 		<article>
+			<% const sentiment = new Sentiment() %>
 			<!-- Title of the article. -->
 			<h2><%=article.title%></h2>
 	
@@ -20,11 +21,10 @@
 			<!-- Article arranged by content. -->
 			<% textArray.forEach((sentence) => { %>
 				<p><%=sentence%></p>
+				<% const result = sentiment.analyze(sentence); %>
+				<% console.log(result); %>
 				<% }); %>
 
-				<% const sentiment = new Sentiment() %>
-				<% var result = sentiment.analyze(article.title); %>
-				<% console.log(result); %>
 	
 			<!-- URL of article. -->
 			<a href="<%=article.url%>"><%= article.url%></a>
