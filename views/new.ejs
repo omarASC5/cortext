@@ -22,7 +22,12 @@
 			<% textArray.forEach((sentence) => { %>
 				<p><%=sentence%></p>
 				<% const sentimentScoreSentence = sentiment.analyze(sentence); %>
-				<% console.log(sentimentScoreSentence); %>
+				<% const wordsArray = sentimentScoreSentence.words; %>
+					<% wordsArray.forEach((word) => { %>
+						<p><%= word %></p>
+					<% }); %>
+					<% const scores = sentimentScoreSentence.score %>
+					<p><%= scores %></p>
 				<% }); %>
 
 	
