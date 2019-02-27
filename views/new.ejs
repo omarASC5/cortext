@@ -21,8 +21,8 @@
 			<!-- Article arranged by content. -->
 			<% textArray.forEach((sentence) => { %>
 				<p><%=sentence%></p>
-				<% const result = sentiment.analyze(sentence); %>
-				<% console.log(result); %>
+				<% const sentimentScoreSentence = sentiment.analyze(sentence); %>
+				<% console.log(sentimentScoreSentence); %>
 				<% }); %>
 
 	
