@@ -5,22 +5,38 @@ form {
 }
 
 .jumbotron {
-	background: white;
+	background: none;
 }
 
 html, body {
+	color: white;
+}
 
+li {
+	line-height: 2;
+}
+
+span {
+	color: rgba(255, 206, 0, 1);
+}
+
+.example-link {
+	color: rgba(255, 206, 0, 1);
+	text-decoration: underline;
 }
 
 .tinted-image {
 	background:
 	  linear-gradient(rgba(42, 38, 61, 0.70),
 	  rgba(42, 38, 61, 0.70)),
-	  url("http://www.tendenza.eu/images/background-patterns/body-bg-32.jpg");
+	  url("../images/circle-clean-clear-220211.jpg");
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	background-size: cover;
 	-o-background-size: cover;
-	background-position: top;
-	/* min-height: 70vmin; */
+	/* background-position: top; */
+	background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: top; 
+	min-height: 80%;
   }
