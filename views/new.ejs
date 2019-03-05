@@ -1,5 +1,6 @@
 <%- include partials/header.ejs %>
 <link rel="stylesheet" href="stylesheets/new.css">
+
 <div class="container">
 	<article class="p-5 my-5 text-justify context">
 		<% const sentiment = new Sentiment() %>
@@ -26,7 +27,12 @@
 			<% const sentimentScoreSentence = sentiment.analyze(sentence); %>
 			<% const wordsArray = sentimentScoreSentence.words; %>
 			<% wordsArray.forEach((word) => { %>
-				<%= sentence.replace(word, "<mark>" +word+ "</mark>"); %>
+				
+				<% let str = "<mark>" +word+ "</mark>" %>
+	<% global.document = new JSDOM(html).window.document; %>
+
+				<% const dom = new JSDOM(`str`); %>
+				                <%= sentence.replace(word, stringToDom(str)); %>
 				<p class="lead"><%= word %></p>
 				<% }); %>
 				<% const scores = sentimentScoreSentence.score %>

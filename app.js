@@ -5,8 +5,13 @@ const express      = require("express"),
 		request    = require("request"),
 		compromise = require("compromise"),
 		bodyParser = require("body-parser"),
-		Sentiment = require('sentiment'),
-		sentiment = new Sentiment();
+		Sentiment  = require('sentiment'),
+		sentiment  = new Sentiment(),
+		html       = require('html-parse-stringify'),
+		stringToDom = require('string-to-dom');
+
+		const jsdom = require("jsdom");
+		const { JSDOM } = jsdom;
 
 app.set("view engine", "ejs"); // Rendering engine defined as EJS
 app.use(express.static(__dirname + '/public')); // Tells express, CSS is in public folder
@@ -53,7 +58,7 @@ app.post("/index", (req, res, next) => {
 
 		return articleFormatting;
 		}).then((article) => {
-			res.render("new", { article: article, Sentiment: Sentiment}); //Must be an object
+			res.render("new", { article: article, Sentiment: Sentiment, html: html, stringToDom: stringToDom, JSDOM: JSDOM}); //Must be an object
 	  }).catch((err) => {
 		console.log(err);
 	  });
