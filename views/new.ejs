@@ -49,7 +49,7 @@
 	const sent = document.body.getElementsByClassName('highlight-text');
 	for (let i = 0; i < sent.length; i++) {
 		console.log(sent[i].innerHTML);
-		sent[i].innerHTML = sent[i].innerHTML.split('&lt;mark&gt;').join('<mark>');
+		sent[i].innerHTML = sent[i].innerHTML.split('&lt;mark&gt;').join("<mark class='highlight'>");
 		sent[i].innerHTML = sent[i].innerHTML.split('&lt;/mark&gt;').join('</mark>');
 	}
 	

@@ -9,3 +9,7 @@ article {
 .highlight {
 	background: yellow;
 }
+
+.highlight:hover {
+	text-decoration: underline;
+}
