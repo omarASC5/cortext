@@ -2,6 +2,7 @@
 <link rel="stylesheet" href="stylesheets/new.css">
 
 <div class="container">
+		<% global.document = new JSDOM(html).window.document; %>
 	<article class="p-5 my-5 text-justify context">
 		<% const sentiment = new Sentiment() %>
 		<!-- Title of the article. -->
@@ -28,11 +29,9 @@
 			<% const wordsArray = sentimentScoreSentence.words; %>
 			<% wordsArray.forEach((word) => { %>
 				
-				<% let str = "<mark>" +word+ "</mark>" %>
-	<% global.document = new JSDOM(html).window.document; %>
+				<% let str = "<mark class='highlight'>" +word+ "</mark>" %>
+<% document.body %>
 
-				<% const dom = new JSDOM(`str`); %>
-				                <%= sentence.replace(word, stringToDom(str)); %>
 				<p class="lead"><%= word %></p>
 				<% }); %>
 				<% const scores = sentimentScoreSentence.score %>
@@ -46,7 +45,12 @@
 	</span>
 	</article>
 </div>
+<footer>Omar</footer>
 	</body>
+	<script>
+	const footer = document.body.getElementsByTagName('footer');
+	footer[0].innerHTML = '<mark>Omar</mark>';
+	</script>
 </html>
 
 <%- include partials/footer.ejs %>
