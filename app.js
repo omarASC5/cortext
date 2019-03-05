@@ -53,12 +53,11 @@ app.post("/index", (req, res, next) => {
 
 		return articleFormatting;
 		}).then((article) => {
-			res.render("new", { article: article, Sentiment: Sentiment }); //Must be an object
+			res.render("new", { article: article, Sentiment: Sentiment}); //Must be an object
 	  }).catch((err) => {
 		console.log(err);
 	  });
 });
-
 
 
 // Server Setup/Initialization

@@ -1,39 +1,46 @@
 <%- include partials/header.ejs %>
-		<article>
-			<% const sentiment = new Sentiment() %>
-			<!-- Title of the article. -->
-			<h2><%=article.title%></h2>
-	
-			<!-- Time article was published. -->
-			<p><%=article.publishedTime%></p>
-	
-			<!-- Author of article -->
-			<p><%=article.author%></p>
-	
-			<!-- Source Website -->
-			<p><%=article.source%></p>
-	
-			<!-- Returns and displays an array of sentences run through Compromise.js -->
-			<%	const textArray = (nlp(article.content).sentences().data()).map((index) => { %>
-			<% 		return index.text %>
-			<%		}); %>
-	
-			<!-- Article arranged by content. -->
-			<% textArray.forEach((sentence) => { %>
-				<p><%=sentence%></p>
-				<% const sentimentScoreSentence = sentiment.analyze(sentence); %>
-				<% const wordsArray = sentimentScoreSentence.words; %>
-					<% wordsArray.forEach((word) => { %>
-						<p><%= word %></p>
-					<% }); %>
-					<% const scores = sentimentScoreSentence.score %>
-					<p><%= scores %></p>
-				<% }); %>
+<link rel="stylesheet" href="stylesheets/new.css">
+<div class="container">
+	<article class="p-5 my-5 text-justify context">
+		<% const sentiment = new Sentiment() %>
+		<!-- Title of the article. -->
+		<h2 class="h1 text-left"><%=article.title%></h2>
 
-	
-			<!-- URL of article. -->
-			<a href="<%=article.url%>"><%= article.url%></a>
-		</article>
+		<!-- Time article was published. -->
+		<p class="lead"><%=article.publishedTime%></p>
+
+		<!-- Author of article -->
+		<p class="lead"><%=article.author%></p>
+
+		<!-- Source Website -->
+		<p class="lead"><%=article.source%></p>
+
+		<!-- Returns and displays an array of sentences run through Compromise.js -->
+		<%	const textArray = (nlp(article.content).sentences().data()).map((index) => { %>
+		<% 		return index.text %>
+		<%		}); %>
+
+		<!-- Article arranged by content. -->
+		<% textArray.forEach((sentence) => { %>
+			<p class="paragraph-styling lead"><%=sentence%></p>
+			<% const sentimentScoreSentence = sentiment.analyze(sentence); %>
+			<% const wordsArray = sentimentScoreSentence.words; %>
+			<% wordsArray.forEach((word) => { %>
+				<%= sentence.replace(word, "<mark>" +word+ "</mark>"); %>
+				<p class="lead"><%= word %></p>
+				<% }); %>
+				<% const scores = sentimentScoreSentence.score %>
+				<p class="lead"><%= scores %></p>
+			<% }); %>
+
+	<span>
+		<!-- URL of article. -->
+		Link to original article: 
+		<a href="<%=article.url%>"><%= article.url%></a>
+	</span>
+	</article>
+</div>
 	</body>
 </html>
+
 <%- include partials/footer.ejs %>

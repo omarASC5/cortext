@@ -1,0 +1,11 @@
+.paragraph-styling {
+	text-indent: 2em;
+}
+
+article {
+	border: 3px solid black;
+}
+
+.highlight {
+	background: yellow;
+}
