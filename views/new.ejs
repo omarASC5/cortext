@@ -24,14 +24,12 @@
 
 		<!-- Article arranged by content. -->
 		<% textArray.forEach((sentence) => { %>
-			<p class="paragraph-styling lead"><%=sentence%></p>
 			<% const sentimentScoreSentence = sentiment.analyze(sentence); %>
 			<% const wordsArray = sentimentScoreSentence.words; %>
 			<% wordsArray.forEach((word) => { %>
-				
-				<% let str = "<mark class='highlight'>" +word+ "</mark>" %>
-<% document.body %>
-
+				<p class="highlight-text">
+					 <%= sentence.replace(word, "<mark>" +word+ "</mark>"); %>
+				</p>
 				<p class="lead"><%= word %></p>
 				<% }); %>
 				<% const scores = sentimentScoreSentence.score %>
@@ -47,9 +45,15 @@
 </div>
 <footer>Omar</footer>
 	</body>
-	<script>
-	const footer = document.body.getElementsByTagName('footer');
-	footer[0].innerHTML = '<mark>Omar</mark>';
+	<script defer>
+	const sent = document.body.getElementsByClassName('highlight-text');
+	for (let i = 0; i < sent.length; i++) {
+		console.log(sent[i].innerHTML);
+		sent[i].innerHTML = sent[i].innerHTML.split('&lt;mark&gt;').join('<mark>');
+		sent[i].innerHTML = sent[i].innerHTML.split('&lt;/mark&gt;').join('</mark>');
+	}
+	
+	// sent[0].innerHTML = '<mark>Omar</mark>';
 	</script>
 </html>
 
