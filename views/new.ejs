@@ -23,18 +23,22 @@
 		<%		}); %>
 
 		<!-- Article arranged by content. -->
-		<% textArray.forEach((sentence) => { %>
-			<% const sentimentScoreSentence = sentiment.analyze(sentence); %>
+		<% for (let i = 0; i < textArray.length; i++) { %>
+			<% const sentimentScoreSentence = sentiment.analyze(textArray[i]); %>
 			<% const wordsArray = sentimentScoreSentence.words; %>
-			<% wordsArray.forEach((word) => { %>
+			<% for (let j = 0; j < wordsArray.length; j++) { %>
+
 				<p class="highlight-text">
-					 <%= sentence.replace(word, "<mark>" +word+ "</mark>"); %>
+					<% if (textArray[i].includes(wordsArray[j])) { %>
+
+						 <%= textArray[i].replace(wordsArray[j], "<mark>" +wordsArray[j]+ "</mark>"); %>
+						<% } %>
 				</p>
-				<p class="lead"><%= word %></p>
-				<% }); %>
+				<p class="lead"><%= wordsArray[j] %></p>
 				<% const scores = sentimentScoreSentence.score %>
 				<p class="lead"><%= scores %></p>
-			<% }); %>
+				<% } %>
+			<% } %>
 
 	<span>
 		<!-- URL of article. -->
@@ -45,7 +49,7 @@
 </div>
 <footer>Omar</footer>
 	</body>
-	<script defer>
+	<script >
 	const sent = document.body.getElementsByClassName('highlight-text');
 	for (let i = 0; i < sent.length; i++) {
 		console.log(sent[i].innerHTML);
