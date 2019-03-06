@@ -29,11 +29,16 @@
 				<% for (let i = 0; i < textArray.length; i++) { %>
 					<% const sentimentScoreSentence = sentiment.analyze(textArray[i]); %>
 					<% const wordsArray = sentimentScoreSentence.words; %>
+					<% let wordsScoreArray = []; %>
 					<% for (let j = 0; j < wordsArray.length; j++) { %>
 						<% textArray[i] = textArray[i].replace((new RegExp(wordsArray[j], 'gi')), "<mark>" +wordsArray[j]+ "</mark>"); %>
 						<p class="lead"><%= wordsArray[j] %></p>
 						<% const scores = sentimentScoreSentence.score %>
 						<p class="lead"><%= scores %></p>
+
+							<% wordsScoreArray.push(sentiment.analyze(wordsArray[j]).score) %>
+
+								<% console.log(wordsScoreArray) %>
 						<% } %>
 						<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" data-html="true" title="<em>Tooltip</em> <u>with</u> <b>HTML</b>">
 								Tooltip on bottom
@@ -61,6 +66,18 @@
 		const sent = document.body.getElementsByClassName('highlight-text');
 		for (let i = 0; i < sent.length; i++) {
 		// console.log(sent[i].innerHTML);
+		
+		function scoreThatCreatesToolTip(score) {
+			let output;
+			let score;
+	
+			if (score >= 4) {
+				return output = "positive";
+			} else {
+				return output = "negaitve";
+			}
+		}
+		scoreThatCreatesToolTip()
 		// 1. The word itself 2. Amount of time on page 3. Thumbs up/down 4. Score
 		sent[i].innerHTML = sent[i].innerHTML.split('&lt;mark&gt;').join("<mark class='highlight' data-toggle='tooltip' data-placement='bottom' data-html='true' title='<em>Tooltip</em> <u>with</u> <b>HTML</b>'>");
 		sent[i].innerHTML = sent[i].innerHTML.split('&lt;/mark&gt;').join('</mark>');
