@@ -25,6 +25,8 @@
 				<% 		return index.text %>
 				<%		}); %>
 		
+				
+
 				<!-- Article arranged by content. -->
 				<% for (let i = 0; i < textArray.length; i++) { %>
 					<% const sentimentScoreSentence = sentiment.analyze(textArray[i]); %>
@@ -40,6 +42,7 @@
 
 								<% console.log(wordsScoreArray) %>
 						<% } %>
+						<!-- Wo -->
 						<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" data-html="true" title="<em>Tooltip</em> <u>with</u> <b>HTML</b>">
 								Tooltip on bottom
 							  </button>
@@ -57,12 +60,19 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript" defer>
+	var mJSVariable = "<%=textArray%>";
+	console.log(mJSVariable);
+</script>
 <footer>Omar</footer>
 	</body>
-	<script>
+	
+	<script type="text/javascript">
 		$(function () {
   			$('[data-toggle="tooltip"]').tooltip();
 		});
+		
+
 		const sent = document.body.getElementsByClassName('highlight-text');
 		for (let i = 0; i < sent.length; i++) {
 		// console.log(sent[i].innerHTML);
