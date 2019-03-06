@@ -27,15 +27,14 @@
 			<% const sentimentScoreSentence = sentiment.analyze(textArray[i]); %>
 			<% const wordsArray = sentimentScoreSentence.words; %>
 			<% for (let j = 0; j < wordsArray.length; j++) { %>
-				<p class="highlight-text">
-						<% var search = wordsArray[j]; %>
-					<%= textArray[i].replace((new RegExp(wordsArray[j], 'gi')), "<mark>" +wordsArray[j]+ "</mark>"); %>
-
-				</p>
+				<% textArray[i] = textArray[i].replace((new RegExp(wordsArray[j], 'gi')), "<mark>" +wordsArray[j]+ "</mark>"); %>
 				<p class="lead"><%= wordsArray[j] %></p>
 				<% const scores = sentimentScoreSentence.score %>
 				<p class="lead"><%= scores %></p>
 				<% } %>
+				<p class="highlight-text">
+					<%= textArray[i] %>
+				</p>
 			<% } %>
 
 	<span>
