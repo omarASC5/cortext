@@ -27,12 +27,10 @@
 			<% const sentimentScoreSentence = sentiment.analyze(textArray[i]); %>
 			<% const wordsArray = sentimentScoreSentence.words; %>
 			<% for (let j = 0; j < wordsArray.length; j++) { %>
-
 				<p class="highlight-text">
-					<% if (textArray[i].includes(wordsArray[j])) { %>
+						<% var search = wordsArray[j]; %>
+					<%= textArray[i].replace((new RegExp(wordsArray[j], 'gi')), "<mark>" +wordsArray[j]+ "</mark>"); %>
 
-						 <%= textArray[i].replace(wordsArray[j], "<mark>" +wordsArray[j]+ "</mark>"); %>
-						<% } %>
 				</p>
 				<p class="lead"><%= wordsArray[j] %></p>
 				<% const scores = sentimentScoreSentence.score %>
@@ -52,7 +50,7 @@
 	<script >
 	const sent = document.body.getElementsByClassName('highlight-text');
 	for (let i = 0; i < sent.length; i++) {
-		console.log(sent[i].innerHTML);
+		// console.log(sent[i].innerHTML);
 		sent[i].innerHTML = sent[i].innerHTML.split('&lt;mark&gt;').join("<mark class='highlight'>");
 		sent[i].innerHTML = sent[i].innerHTML.split('&lt;/mark&gt;').join('</mark>');
 	}
