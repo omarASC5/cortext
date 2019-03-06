@@ -1,48 +1,53 @@
 <%- include partials/header.ejs %>
 <link rel="stylesheet" href="stylesheets/new.css">
+<div id="main2" class="d-flex justify-content-evenly align-items-start flex-nowrap">
 
-<div class="container">
-		<% global.document = new JSDOM(html).window.document; %>
-	<article class="p-5 my-5 text-justify context">
-		<% const sentiment = new Sentiment() %>
-		<!-- Title of the article. -->
-		<h2 class="h1 text-left"><%=article.title%></h2>
-
-		<!-- Time article was published. -->
-		<p class="lead"><%=article.publishedTime%></p>
-
-		<!-- Author of article -->
-		<p class="lead"><%=article.author%></p>
-
-		<!-- Source Website -->
-		<p class="lead"><%=article.source%></p>
-
-		<!-- Returns and displays an array of sentences run through Compromise.js -->
-		<%	const textArray = (nlp(article.content).sentences().data()).map((index) => { %>
-		<% 		return index.text %>
-		<%		}); %>
-
-		<!-- Article arranged by content. -->
-		<% for (let i = 0; i < textArray.length; i++) { %>
-			<% const sentimentScoreSentence = sentiment.analyze(textArray[i]); %>
-			<% const wordsArray = sentimentScoreSentence.words; %>
-			<% for (let j = 0; j < wordsArray.length; j++) { %>
-				<% textArray[i] = textArray[i].replace((new RegExp(wordsArray[j], 'gi')), "<mark>" +wordsArray[j]+ "</mark>"); %>
-				<p class="lead"><%= wordsArray[j] %></p>
-				<% const scores = sentimentScoreSentence.score %>
-				<p class="lead"><%= scores %></p>
-				<% } %>
-				<p class="highlight-text">
-					<%= textArray[i] %>
-				</p>
-			<% } %>
-
-	<span>
-		<!-- URL of article. -->
-		Link to original article: 
-		<a href="<%=article.url%>"><%= article.url%></a>
-	</span>
-	</article>
+	<div id="main" class="flex-item d-flex align-items-start flex-column">
+	
+		<div class="container px-0 mx-0">
+				<% global.document = new JSDOM(html).window.document; %>
+			<article class="p-5 my-5 mr-0 text-justify context" id="art">
+				<% const sentiment = new Sentiment() %>
+				<!-- Title of the article. -->
+				<h2 class="h1 text-left"><%=article.title%></h2>
+		
+				<!-- Time article was published. -->
+				<p class="lead"><%=article.publishedTime%></p>
+		
+				<!-- Author of article -->
+				<p class="lead"><%=article.author%></p>
+		
+				<!-- Source Website -->
+				<p class="lead"><%=article.source%></p>
+		
+				<!-- Returns and displays an array of sentences run through Compromise.js -->
+				<%	const textArray = (nlp(article.content).sentences().data()).map((index) => { %>
+				<% 		return index.text %>
+				<%		}); %>
+		
+				<!-- Article arranged by content. -->
+				<% for (let i = 0; i < textArray.length; i++) { %>
+					<% const sentimentScoreSentence = sentiment.analyze(textArray[i]); %>
+					<% const wordsArray = sentimentScoreSentence.words; %>
+					<% for (let j = 0; j < wordsArray.length; j++) { %>
+						<% textArray[i] = textArray[i].replace((new RegExp(wordsArray[j], 'gi')), "<mark>" +wordsArray[j]+ "</mark>"); %>
+						<p class="lead"><%= wordsArray[j] %></p>
+						<% const scores = sentimentScoreSentence.score %>
+						<p class="lead"><%= scores %></p>
+						<% } %>
+						<p class="highlight-text lead paragraph-styling">
+							<%= textArray[i] %>
+						</p>
+					<% } %>
+		
+			<span>
+				<!-- URL of article. -->
+				Link to original article: 
+				<a href="<%=article.url%>"><%= article.url%></a>
+			</span>
+			</article>
+		</div>
+	</div>
 </div>
 <footer>Omar</footer>
 	</body>
@@ -52,8 +57,20 @@
 		// console.log(sent[i].innerHTML);
 		sent[i].innerHTML = sent[i].innerHTML.split('&lt;mark&gt;').join("<mark class='highlight'>");
 		sent[i].innerHTML = sent[i].innerHTML.split('&lt;/mark&gt;').join('</mark>');
+		sent[i].addEventListener("click", () => {
+			const popupDiv = document.createElement('div');
+			const scoreParagraph = document.createElement('p');
+			popupDiv.appendChild(scoreParagraph);
+			scoreParagraph.classList.add('score-paragraph-styles');
+			scoreParagraph.innerHTML = "hi";
+			popupDiv.classList.add('popup-div-styles');
+			popupDiv.classList.add('flex-item');
+			const mainDiv = document.getElementById('main');
+			mainDiv.prepend(popupDiv);
+			// p-5 my-5 mr-0
+		});
 	}
-	
+
 	// sent[0].innerHTML = '<mark>Omar</mark>';
 	</script>
 </html>
