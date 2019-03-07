@@ -33,16 +33,13 @@
 					<% const sentimentScoreSentence = sentiment.analyze(textArray[i]); %>
 					<% const wordsArray = sentimentScoreSentence.words; %>
 					<% for (let j = 0; j < wordsArray.length; j++) { %>
+					//TODO:	<% wordsScoreArray.push(sentiment.analyze(wordsArray[j]).score) %>
 						<% textArray[i] = textArray[i].replace((new RegExp(wordsArray[j], 'gi')), "<mark>" +wordsArray[j]+ "</mark>"); %>
 						<p class="lead"><%= wordsArray[j] %></p>
 						<% const scores = sentimentScoreSentence.score %>
 						<p class="lead"><%= scores %></p>
-							<% wordsScoreArray.push(sentiment.analyze(wordsArray[j]).score) %>
 						<% } %>
-						<!-- Wo -->
-						<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" data-html="true" title="<em>Tooltip</em> <u>with</u> <b>HTML</b>">
-								Tooltip on bottom
-							  </button>
+						
 						<p class="highlight-text lead paragraph-styling">
 							<%= textArray[i] %>
 						</p>
@@ -71,21 +68,42 @@
 		
 		
 		function scoreThatCreatesToolTip(score) {
-			let output;
+			let output = {
+				state: "",
+				icon: ""
+			};
 			// console.log(score);
 			if (score > 0) {
-				 output = "positive";
+				 output.state = "positive";
+				 output.icon = "<i class='fas fa-thumbs-up'></i>";
 			}  else {
-				 output = "negaitve";
+				 output.state = "negaitve";
+				 output.icon = "<i class='fas fa-thumbs-down'></i>";
 			}
 			// console.log(output);
 			
 			return output;
 		}
+
 		const sent = document.body.getElementsByClassName('highlight-text');
-		var wordsScoreArray = "<%=wordsScoreArray%>".split(',');
-		let outputScore = [];
+		const tabs = document.body.getElementsByClassName('highlight');
+		var wordsScoreArray = [];
+		const aLLwords = [];
+		const sentiment = "<%=sentiment.analyze%>";
+		console.log(sentiment);
+
+		
+		
+		//creates an array of all the words
+		for (let i = 0; i < tabs.length; i++) {
+
+			wordsScoreArray.push(sentiment.analyze(tabs[i].innerHTML))
+		}
+
 		console.log(wordsScoreArray);
+		
+		
+		let outputScore = [];
 
 		for (let i = 0; i < sent.length; i++) {
 		
@@ -102,11 +120,26 @@
 			// scoreThatCreatesToolTip(wordsScoreArray[j]);
 			// 1. The word itself 2. Amount of time on page 3. Thumbs up/down 4. Score
 		}
-
-		const tabs = document.body.getElementsByClassName('highlight');
-		for (let i = 0; i < tabs.length; i++) {
 		
-		tabs[i].outerHTML = tabs[i].outerHTML.split('nUm').join(outputScore[i]);
+		
+
+
+
+
+
+
+
+
+		// console.log(tabs);
+		// console.log(outputScore);
+		for (let i = 0; i < tabs.length; i++) {
+			console.log(tabs.length);
+			console.log(outputScore.length);
+			
+			
+			//console.log(outputScore[i].state);
+			
+		tabs[i].outerHTML = tabs[i].outerHTML.split('nUm').join(outputScore[i].state);
 			
 		}
 			// console.log(outputScore)
