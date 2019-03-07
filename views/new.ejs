@@ -94,14 +94,16 @@
 		
 			for (let j = 0; j < wordsScoreArray.length; j++) {
 		// console.log(parseInt(wordsScoreArray[j]));
-				let outputScore = scoreThatCreatesToolTip(parseInt(wordsScoreArray[j]));
+		const wordsScoreArray_int =  parseInt(wordsScoreArray[j]);
+		// console.log(wordsScoreArray_int);
+				 outputScore = scoreThatCreatesToolTip(wordsScoreArray_int);
 				console.log(outputScore)
 				// scoreThatCreatesToolTip(wordsScoreArray[j]);
 				// 1. The word itself 2. Amount of time on page 3. Thumbs up/down 4. Score
 				sent[i].innerHTML = sent[i].innerHTML.split('&lt;mark&gt;').join(`<mark class='highlight' data-toggle='tooltip' data-placement='bottom' data-html='true' title='<em>${outputScore}</em> <u>with</u> <b>HTML</b>'>`);
 			}
-
 			sent[i].innerHTML = sent[i].innerHTML.split('&lt;/mark&gt;').join('</mark>');
+
 			
 	}
 
