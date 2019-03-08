@@ -1,15 +1,13 @@
 <%- include partials/header.ejs %>
 <link rel="stylesheet" href="stylesheets/new.css">
-<div id="main2" class="d-flex justify-content-evenly align-items-start flex-nowrap">
 
-	<div id="main" class="flex-item d-flex align-items-start flex-column-reverse">
 	
-		<div class="container px-0 mx-0">
+		<div class="container">
 				<% global.document = new JSDOM(html).window.document; %>
-			<article class="p-5 my-5 mr-0 text-justify context" id="art">
+			<article class="p-5 m-5 context" id="art">
 				<% const sentiment = new Sentiment() %>
 				<!-- Title of the article. -->
-				<h2 class="h1 text-left"><%=article.title%></h2>
+				<h2 class="h1"><%=article.title%></h2>
 		
 				<!-- Time article was published. -->
 				<p class="lead"><%=article.publishedTime%></p>
@@ -33,7 +31,7 @@
 					<% const sentimentScoreSentence = sentiment.analyze(textArray[i]); %>
 					<% const wordsArray = sentimentScoreSentence.words; %>
 					<% for (let j = 0; j < wordsArray.length; j++) { %>
-					//TODO:	<% wordsScoreArray.push(sentiment.analyze(wordsArray[j]).score) %>
+						<% wordsScoreArray.push(sentiment.analyze(wordsArray[j]).score) %>
 						<% textArray[i] = textArray[i].replace((new RegExp(wordsArray[j], 'gi')), "<mark>" +wordsArray[j]+ "</mark>"); %>
 						<p class="lead"><%= wordsArray[j] %></p>
 						<% const scores = sentimentScoreSentence.score %>
@@ -51,14 +49,11 @@
 				<a href="<%=article.url%>"><%= article.url%></a>
 			</span>
 			</article>
-		</div>
-	</div>
 </div>
 <script type="text/javascript" defer>
 	// var wordsScoreArray = "<%=wordsScoreArray%>";
 	// console.log(wordsScoreArray);
 </script>
-<footer>Omar</footer>
 	</body>
 	
 	<script type="text/javascript">
