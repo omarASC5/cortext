@@ -1,13 +1,12 @@
 <%- include partials/header.ejs %>
 <link rel="stylesheet" href="stylesheets/new.css">
 
-	
 		<div class="container">
 				<% global.document = new JSDOM(html).window.document; %>
 			<article class="p-5 m-5 context" id="art">
 				<% const sentiment = new Sentiment() %>
 				<!-- Title of the article. -->
-				<h2 class="h1"><%=article.title%></h2>
+				<h2 class="h1 text-left"><%=article.title%></h2>
 		
 				<!-- Time article was published. -->
 				<p class="lead"><%=article.publishedTime%></p>
@@ -49,12 +48,12 @@
 				<a href="<%=article.url%>"><%= article.url%></a>
 			</span>
 			</article>
+
 </div>
 <script type="text/javascript" defer>
 	// var wordsScoreArray = "<%=wordsScoreArray%>";
 	// console.log(wordsScoreArray);
 </script>
-	</body>
 	
 	<script type="text/javascript">
 		$(function () {
@@ -86,7 +85,6 @@
 		const aLLwords = [];
 		const sentiment = "<%=sentiment.analyze%>";
 		console.log(sentiment);
-
 		
 		
 		//creates an array of all the words
@@ -140,6 +138,5 @@
 			// console.log(outputScore)
 	// sent[0].innerHTML = '<mark>Omar</mark>';
 	</script>
-</html>
 
 <%- include partials/footer.ejs %>
