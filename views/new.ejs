@@ -64,7 +64,8 @@
 		function scoreThatCreatesToolTip(score) {
 			let output = {
 				state: "",
-				icon: ""
+				icon: "",
+				score: score
 			};
 			// console.log(score);
 			if (score > 0) {
@@ -83,7 +84,7 @@
 		const tabs = document.body.getElementsByClassName('highlight');
 		var wordsScoreArray = [];
 		const aLLwords = [];
-		const sentiment = "<%=sentiment.analyze%>";
+		const sentiment = "<%=sentiment%>";
 		console.log(sentiment);
 		
 		
@@ -132,7 +133,7 @@
 			
 			//console.log(outputScore[i].state);
 			
-		tabs[i].outerHTML = tabs[i].outerHTML.split('nUm').join(outputScore[i].state);
+		tabs[i].outerHTML = tabs[i].outerHTML.split('nUm').join(outputScore[i]);
 			
 		}
 			// console.log(outputScore)
