@@ -31,9 +31,10 @@ h2 {
 
 .tinted-image {
 	background:
-	  linear-gradient(rgba(42, 38, 61, 0.70),
-	  rgba(42, 38, 61, 0.70)),
-	  url("../images/circle-clean-clear-220211.jpg");
+	  linear-gradient(rgba(42, 38, 61, 0.05),
+	  rgba(42, 38, 61, 0.05)),
+	  /* url("../images/branden-harvey-362111-unsplash.jpg"); */
+	  rgba(119, 249, 251, 1);
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	background-size: cover;

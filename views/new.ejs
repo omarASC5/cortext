@@ -1,78 +1,78 @@
 <%- include partials/header.ejs %>
 <link rel="stylesheet" href="stylesheets/new.css">
 
-		<div class="container">
-				<% global.document = new JSDOM(html).window.document; %>
-			<article class="p-5 m-5 context" id="art">
-				<% const sentiment = new Sentiment() %>
-				<!-- Title of the article. -->
-				<h2 class="h1 text-left"><%=article.title%></h2>
-		
-				<!-- Time article was published. -->
-				<p class="lead"><%=article.publishedTime%></p>
-		
-				<!-- Author of article -->
-				<p class="lead"><%=article.author%></p>
-		
-				<!-- Source Website -->
-				<p class="lead"><%=article.source%></p>
-		
-				<!-- Returns and displays an array of sentences run through Compromise.js -->
-				<%	const textArray = (nlp(article.content).sentences().data()).map((index) => { %>
-				<% 		return index.text %>
-				<%		}); %>
-		
-				
+    
+        <div class="container px-0 mx-0">
+                <% global.document = new JSDOM(html).window.document; %>
+            <article class="p-5 my-5 mr-0 text-justify context" id="art">
+                <% const sentiment = new Sentiment() %>
+                <!-- Title of the article. -->
+                <h2 class="h1 text-left"><%=article.title%></h2>
+        
+                <!-- Time article was published. -->
+                <p class="lead"><%=article.publishedTime%></p>
+        
+                <!-- Author of article -->
+                <p class="lead"><%=article.author%></p>
+        
+                <!-- Source Website -->
+                <p class="lead"><%=article.source%></p>
+        
+                <!-- Returns and displays an array of sentences run through Compromise.js -->
+                <%  const textArray = (nlp(article.content).sentences().data()).map((index) => { %>
+                <%      return index.text %>
+                <%      }); %>
+        
+                
 
-				<!-- Article arranged by content. -->
-				<% let wordsScoreArray = []; %>
-				<% for (let i = 0; i < textArray.length; i++) { %>
-					<% const sentimentScoreSentence = sentiment.analyze(textArray[i]); %>
-					<% const wordsArray = sentimentScoreSentence.words; %>
-					<% for (let j = 0; j < wordsArray.length; j++) { %>
-						<% wordsScoreArray.push(sentiment.analyze(wordsArray[j]).score) %>
-						<% textArray[i] = textArray[i].replace((new RegExp(wordsArray[j], 'gi')), "<mark>" +wordsArray[j]+ "</mark>"); %>
-						<p class="lead"><%= wordsArray[j] %></p>
-						<% const scores = sentimentScoreSentence.score %>
-						<p class="lead"><%= scores %></p>
-						<% } %>
-						
-						<p class="highlight-text lead paragraph-styling">
-							<%= textArray[i] %>
-						</p>
-					<% } %>
-		
-			<span>
-				<!-- URL of article. -->
-				Link to original article: 
-				<a href="<%=article.url%>"><%= article.url%></a>
-			</span>
-			</article>
+                <!-- Article arranged by content. -->
+                <% let wordsScoreArray = []; %>
+                <% for (let i = 0; i < textArray.length; i++) { %>
+                    <% const sentimentScoreSentence = sentiment.analyze(textArray[i]); %>
+                    <% const wordsArray = sentimentScoreSentence.words; %>
+                    <% for (let j = 0; j < wordsArray.length; j++) { %>
+                        <% textArray[i] = textArray[i].replace((new RegExp(wordsArray[j], 'gi')), "<mark>" +wordsArray[j]+ "</mark>"); %>
+                        <% const scores = sentimentScoreSentence.score %>
+                            <% wordsScoreArray.push(sentiment.analyze(wordsArray[j]).score) %>
+                        <% } %>
+                        <!-- Wo -->
+
+                        <p class="highlight-text lead paragraph-styling">
+                            <%= textArray[i] %>
+                        </p>
+                    <% } %>
+        
+            <span>
+                <!-- URL of article. -->
+                Link to original article: 
+                <a href="<%=article.url%>"><%= article.url%></a>
+            </span>
+            </article>
 
 </div>
 <script type="text/javascript" defer>
-	// var wordsScoreArray = "<%=wordsScoreArray%>";
-	// console.log(wordsScoreArray);
+    // var wordsScoreArray = "<%=wordsScoreArray%>";
+    // console.log(wordsScoreArray);
 </script>
-	
-	<script type="text/javascript">
-		$(function () {
-  			$('[data-toggle="tooltip"]').tooltip();
-		});
-		
-		
-		function scoreThatCreatesToolTip(score) {
+    </body>
+    
+    <script type="text/javascript">
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+        
+        
+        function scoreThatCreatesToolTip(score) {
 			let output = {
 				state: "",
-				icon: "",
-				score: score
+				icon: ""
 			};
 			// console.log(score);
 			if (score > 0) {
 				 output.state = "positive";
 				 output.icon = "<i class='fas fa-thumbs-up'></i>";
 			}  else {
-				 output.state = "negaitve";
+				 output.state = "negative";
 				 output.icon = "<i class='fas fa-thumbs-down'></i>";
 			}
 			// console.log(output);
@@ -80,64 +80,37 @@
 			return output;
 		}
 
-		const sent = document.body.getElementsByClassName('highlight-text');
-		const tabs = document.body.getElementsByClassName('highlight');
-		var wordsScoreArray = [];
-		const aLLwords = [];
-		const sentiment = "<%=sentiment%>";
-		console.log(sentiment);
-		
-		
-		//creates an array of all the words
-		for (let i = 0; i < tabs.length; i++) {
 
-			wordsScoreArray.push(sentiment.analyze(tabs[i].innerHTML))
-		}
-
-		console.log(wordsScoreArray);
-		
-		
-		let outputScore = [];
-
-		for (let i = 0; i < sent.length; i++) {
-		
-			sent[i].innerHTML = sent[i].innerHTML.split('&lt;mark&gt;').join(`<mark class='highlight' data-toggle='tooltip' data-placement='bottom' data-html='true' title='<em>nUm</em> <u>with</u> <b>HTML</b>'>`);
-			sent[i].innerHTML = sent[i].innerHTML.split('&lt;/mark&gt;').join('</mark>');
-				
-			}
-
-		for (let j = 0; j < wordsScoreArray.length; j++) {
-			// console.log(parseInt(wordsScoreArray[j]));
-			const wordsScoreArray_int =  parseInt(wordsScoreArray[j]);
-			// console.log(wordsScoreArray_int);
-			outputScore.push(scoreThatCreatesToolTip(wordsScoreArray_int));	
-			// scoreThatCreatesToolTip(wordsScoreArray[j]);
-			// 1. The word itself 2. Amount of time on page 3. Thumbs up/down 4. Score
-		}
-		
-		
-
-
-
-
-
-
-
-
-		// console.log(tabs);
-		// console.log(outputScore);
-		for (let i = 0; i < tabs.length; i++) {
-			console.log(tabs.length);
-			console.log(outputScore.length);
+        const sent = document.body.getElementsByClassName('highlight-text');
+        var wordsScoreArray = "<%=wordsScoreArray%>".split(',');
+        let outputIcon = [];
+		let outputPositiveOrNegativeText = []
+        console.log(wordsScoreArray);
+        for (let i = 0; i < sent.length; i++) {
+        
+            sent[i].innerHTML = sent[i].innerHTML.split('&lt;mark&gt;').join(`<mark class='highlight' data-toggle='tooltip' data-placement='bottom' data-html='true' title='<h1>nUm</h1> <h2>with</h2> <b>HTML</b>'>`);
+            sent[i].innerHTML = sent[i].innerHTML.split('&lt;/mark&gt;').join('</mark>');
+                
+            }
+        for (let j = 0; j < wordsScoreArray.length; j++) {
+            // console.log(parseInt(wordsScoreArray[j]));
+            const wordsScoreArray_int =  parseInt(wordsScoreArray[j]);
+            // console.log(wordsScoreArray_int);
+            outputIcon.push(scoreThatCreatesToolTip(wordsScoreArray_int).icon); 
+			outputPositiveOrNegativeText.push(scoreThatCreatesToolTip(wordsScoreArray_int).state); 
+            // scoreThatCreatesToolTip(wordsScoreArray[j]);
+            // 1. The word itself 2. Amount of time on page 3. Thumbs up/down 4. Score
+        }
+        const wordsFromDom = document.body.getElementsByClassName('highlight');
+        for (let i = 0; i < wordsFromDom.length; i++) {
+        
+			wordsFromDom[i].outerHTML = wordsFromDom[i].outerHTML.split('nUm').join(outputIcon[i]);
+			wordsFromDom[i].outerHTML = wordsFromDom[i].outerHTML.split('with').join(outputPositiveOrNegativeText[i]);
 			
-			
-			//console.log(outputScore[i].state);
-			
-		tabs[i].outerHTML = tabs[i].outerHTML.split('nUm').join(outputScore[i]);
-			
-		}
-			// console.log(outputScore)
-	// sent[0].innerHTML = '<mark>Omar</mark>';
-	</script>
+        }
+            // console.log(outputScore)
+    // sent[0].innerHTML = '<mark>Omar</mark>';
+    </script>
+</html>
 
 <%- include partials/footer.ejs %>
