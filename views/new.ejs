@@ -65,7 +65,8 @@
         function scoreThatCreatesToolTip(score) {
 			let output = {
 				state: "",
-				icon: ""
+				icon: "",
+				score: score
 			};
 			// console.log(score);
 			if (score > 0) {
@@ -84,7 +85,8 @@
         const sent = document.body.getElementsByClassName('highlight-text');
         var wordsScoreArray = "<%=wordsScoreArray%>".split(',');
         let outputIcon = [];
-		let outputPositiveOrNegativeText = []
+		let outputPositiveOrNegativeText = [];
+		let outputScore = [];
         console.log(wordsScoreArray);
         for (let i = 0; i < sent.length; i++) {
         
@@ -98,16 +100,19 @@
             // console.log(wordsScoreArray_int);
             outputIcon.push(scoreThatCreatesToolTip(wordsScoreArray_int).icon); 
 			outputPositiveOrNegativeText.push(scoreThatCreatesToolTip(wordsScoreArray_int).state); 
-            // scoreThatCreatesToolTip(wordsScoreArray[j]);
+            outputScore.push(scoreThatCreatesToolTip(wordsScoreArray_int).score); 
+			// scoreThatCreatesToolTip(wordsScoreArray[j]);
             // 1. The word itself 2. Amount of time on page 3. Thumbs up/down 4. Score
         }
         const wordsFromDom = document.body.getElementsByClassName('highlight');
+		let allWords = [];
         for (let i = 0; i < wordsFromDom.length; i++) {
-        
+			allWords.push(wordsFromDom[i].innerText);
 			wordsFromDom[i].outerHTML = wordsFromDom[i].outerHTML.split('nUm').join(outputIcon[i]);
 			wordsFromDom[i].outerHTML = wordsFromDom[i].outerHTML.split('with').join(outputPositiveOrNegativeText[i]);
+			wordsFromDom[i].outerHTML = wordsFromDom[i].outerHTML.split('HTML').join(`Score: ${outputScore[i]}`);
 			
-        }
+		}
             // console.log(outputScore)
     // sent[0].innerHTML = '<mark>Omar</mark>';
     </script>
