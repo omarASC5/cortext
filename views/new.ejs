@@ -42,14 +42,14 @@
                         </p>
                     <% } %>
         
-            <span>
+            <span class="text-center">
                 <!-- URL of article. -->
                 Link to original article: 
                 <a href="<%=article.url%>"><%= article.url%></a>
             </span>
 				<strong>
 
-					<p id="overall-score" class="h3"></p>
+					<p id="overall-score" class="h3 text-center"></p>
 				</strong>
             </article>
 
@@ -167,9 +167,7 @@ overAllScoreParagraph.innerHTML = overallScore(avg);
 }
             // console.log(outputScore)
     // sent[0].innerHTML = '<mark>Omar</mark>';
-$('document').ready(function () {
-    $('body').html($('body').html().replace(/&nbsp\;/g, ''));
-});
+
     </script>
 
 <%- include partials/footer.ejs %>
