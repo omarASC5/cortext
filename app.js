@@ -29,15 +29,16 @@ app.get("/index", (req, res, next) => {
 	res.render("index");
 })
 
+
 // Post route, the forms sends a URL to be exported as an object with article feautures 
 app.post("/index", (req, res, next) => {
 	// Initializes article-parser, which helps parse articles into object forme
 	const {
 		extract 
 	  } = require('article-parser');
-	   
 	//   User-entered URL
 	  let url = req.body.url;
+
 	  extract(url).then((article) => {
 		  const articleInHTMLForm = article.content;
 			const articleInTextForm = articleInHTMLForm

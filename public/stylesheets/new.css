@@ -1,10 +1,9 @@
-.paragraph-styling {
-	text-indent: 2em;
-}
+
 
 article {
 	border: 3px solid black;
 }
+
 
 .highlight {
 	background: yellow;
@@ -15,30 +14,13 @@ article {
 	border: 1px solid black;
 }
 
-.popup-div-styles {
-	background: green !important;
-	/* min-width: 60%; */
-	width: 200px;
-	display: flex;
-	align-self: flex-end;
-	margin-right: 3.5em;
-	/* justify-self: center; */
-	/* justify-content: flex-start; */
-}
 
-.flex-item {
-	flex-grow: 1;
-	 flex-shrink: 1;
-}
 
-p {
-	/* padding-top: 0.75em;
-	padding-bottom: 0.75em; */
-}
+
+
 
 #main {
-	width: 100vw;
-	height: 100%;
+
 	/* padding-top: 4em; */
 	/* margin-top: 4em; */
 	/* display: flex;
