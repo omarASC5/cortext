@@ -1,73 +1,76 @@
 <%- include partials/header.ejs %>
 <link rel="stylesheet" href="stylesheets/new.css">
 
-    
-        <div class="container">
-                <% global.document = new JSDOM(html).window.document; %>
-            <article class="p-5 m-5">
-                <% const sentiment = new Sentiment() %>
-                <!-- Title of the article. -->
-                <h2 class="h1"><%=article.title%></h2>
-        
-                <!-- Time article was published. -->
-                <p class="lead"><%=article.publishedTime%></p>
-        
-                <!-- Author of article -->
-                <p class="lead"><%=article.author%></p>
-        
-                <!-- Source Website -->
-                <p class="lead"><%=article.source%></p>
-        
-                <!-- Returns and displays an array of sentences run through Compromise.js -->
-                <%  const textArray = (nlp(article.content).sentences().data()).map((index) => { %>
-                <%      return index.text %>
-                <%      }); %>
-        <p id="yy"style="display:none"><%=textArray%></p>
+		<div class="container">
+				<% global.document = new JSDOM(html).window.document; %>
+			<article class="p-5 m-5 context" id="art">
+				<% const sentiment = new Sentiment() %>
+				<!-- Title of the article. -->
+				<h2 class="h1 text-left"><%=article.title%></h2>
+		
+				<!-- Time article was published. -->
+				<p class="lead"><%=article.publishedTime%></p>
+		
+				<!-- Author of article -->
+				<p class="lead"><%=article.author%></p>
+		
+				<!-- Source Website -->
+				<p class="lead"><%=article.source%></p>
+		
+				<!-- Returns and displays an array of sentences run through Compromise.js -->
+				<%	const textArray = (nlp(article.content).sentences().data()).map((index) => { %>
+				<% 		return index.text %>
+				<%		}); %>
+		        <p id="yy"style="display:none"><%=textArray%></p>
 
-                <!-- Article arranged by content. -->
-                <% let wordsScoreArray = []; %>
-                <% for (let i = 0; i < textArray.length; i++) { %>
-                    <% const sentimentScoreSentence = sentiment.analyze(textArray[i]); %>
-                    <% const wordsArray = sentimentScoreSentence.words; %>
-<!-- Replace wordsArray with allWords array -->
-                    <% for (let j = 0; j < wordsArray.length; j++) { %>
-                        <% textArray[i] = textArray[i].replace((new RegExp(wordsArray[j], 'gi')), "<mark>" +wordsArray[j]+ "</mark>"); %>
-                        <% const scores = sentimentScoreSentence.score %>
-                            <% wordsScoreArray.push(sentiment.analyze(wordsArray[j]).score) %>
-                        <% } %>
-                        <!-- Wo -->
+				
 
-                        <p class="highlight-text lead paragraph-styling">
-                            <%= textArray[i] %>
-                        </p>
-                    <% } %>
-        
-            <span class="text-center">
-                <!-- URL of article. -->
-                Link to original article: 
-                <a href="<%=article.url%>"><%= article.url%></a>
-            </span>
-				<strong>
+			     <!-- Article arranged by content. -->
+				 <% let wordsScoreArray = []; %>
+				 <% for (let i = 0; i < textArray.length; i++) { %>
+					 <% const sentimentScoreSentence = sentiment.analyze(textArray[i]); %>
+					 <% const wordsArray = sentimentScoreSentence.words; %>
+ <!-- Replace wordsArray with allWords array -->
+					 <% for (let j = 0; j < wordsArray.length; j++) { %>
+						 <% textArray[i] = textArray[i].replace((new RegExp(wordsArray[j], 'gi')), "<mark>" +wordsArray[j]+ "</mark>"); %>
+						 <% const scores = sentimentScoreSentence.score %>
+							 <% wordsScoreArray.push(sentiment.analyze(wordsArray[j]).score) %>
+						 <% } %>
+						 <!-- Wo -->
+						 <p class="highlight-text lead paragraph-styling">
+							 <%= textArray[i] %>
+						 </p>
+					 <% } %>
 
-					<p id="overall-score" class="h3 text-center"></p>
-				</strong>
-            </article>
+					 
+		
+			<span>
+				<!-- URL of article. -->
+				Link to original article: 
+				<a href="<%=article.url%>"><%= article.url%></a>
+			</span>
+			</article>
+
+			<strong>
+
+				<p id="overall-score" class="h3 text-center"></p>
+			</strong>
 
 </div>
 <script type="text/javascript" defer>
-    // var wordsScoreArray = "<%=wordsScoreArray%>";
-    // console.log(wordsScoreArray);
+	// var wordsScoreArray = "<%=wordsScoreArray%>";
+	// console.log(wordsScoreArray);
 </script>
-    
-    <script type="text/javascript">
-	const textSpacing = document.getElementById('text');
+	
+	<script type="text/javascript">
+		const textSpacing = document.getElementById('text');
 	// console.log(textSpacing)
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-        });
-        
-        
-        function scoreThatCreatesToolTip(score) {
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+        
+        
+        function scoreThatCreatesToolTip(score) {
 			score+=5;
 			let output = {
 				state: "",
@@ -84,47 +87,42 @@
 			}			
 			return output;
 		}
-
 // var total = 0;
 // for(var i = 0; i < wordsScoreArray_int.length; i++) {
 //     total += wordsScoreArray_int[i];
 // }
 // var avg = total / wordsScoreArray_int.length;
-
-
-        const sent = document.body.getElementsByClassName('highlight-text');
-        var wordsScoreArray = "<%=wordsScoreArray%>".split(',');
-        let outputIcon = [];
+        const sent = document.body.getElementsByClassName('highlight-text');
+        var wordsScoreArray = "<%=wordsScoreArray%>".split(',');
+        let outputIcon = [];
 		let outputPositiveOrNegativeText = [];
 		let outputScore = [];
-        console.log(wordsScoreArray);
-        for (let i = 0; i < sent.length; i++) {
-        
-            sent[i].innerHTML = sent[i].innerHTML.split('&lt;mark&gt;').join(`<mark class='highlight' data-toggle='tooltip' data-placement='bottom' data-html='true' title='<h1>nUm</h1> <h2>with</h2> <b>HTML</b>'>`);
-            sent[i].innerHTML = sent[i].innerHTML.split('&lt;/mark&gt;').join('</mark>');
-                
-            }
+        console.log(wordsScoreArray);
+        for (let i = 0; i < sent.length; i++) {
+        
+            sent[i].innerHTML = sent[i].innerHTML.split('&lt;mark&gt;').join(`<mark class='highlight' data-toggle='tooltip' data-placement='bottom' data-html='true' title='<h1>nUm</h1> <h2>with</h2> <b>HTML</b>'>`);
+            sent[i].innerHTML = sent[i].innerHTML.split('&lt;/mark&gt;').join('</mark>');
+                
+            }
 		const wordsFromDom = document.body.getElementsByClassName('highlight');
 		let allWords = [];
-        for (let i = 0; i < wordsFromDom.length; i++) {
+        for (let i = 0; i < wordsFromDom.length; i++) {
 			allWords.push(wordsFromDom[i].innerHTML);
 		}
 		console.log(allWords.length)
 		
-        for (let j = 0; j < wordsScoreArray.length; j++) {
-            // console.log(parseInt(wordsScoreArray[j]));
-            const wordsScoreArray_int =  parseInt(wordsScoreArray);
+        for (let j = 0; j < wordsScoreArray.length; j++) {
+            // console.log(parseInt(wordsScoreArray[j]));
+            const wordsScoreArray_int =  parseInt(wordsScoreArray);
 			console.log(wordsScoreArray_int)
-            // console.log(wordsScoreArray_int);
-            outputIcon.push(scoreThatCreatesToolTip(wordsScoreArray_int).icon); 
-			outputPositiveOrNegativeText.push(scoreThatCreatesToolTip(wordsScoreArray_int).state); 
-            outputScore.push(scoreThatCreatesToolTip(wordsScoreArray_int).score);
+            // console.log(wordsScoreArray_int);
+            outputIcon.push(scoreThatCreatesToolTip(wordsScoreArray_int).icon); 
+			outputPositiveOrNegativeText.push(scoreThatCreatesToolTip(wordsScoreArray_int).state); 
+            outputScore.push(scoreThatCreatesToolTip(wordsScoreArray_int).score);
 		
-
 			// scoreThatCreatesToolTip(wordsScoreArray[j]);
-            // 1. The word itself 2. Amount of time on page 3. Thumbs up/down 4. Score
-        }
-
+            // 1. The word itself 2. Amount of time on page 3. Thumbs up/down 4. Score
+        }
 function overallScore(avg) {
 	let output;
 	if (avg > 5) {
@@ -136,7 +134,6 @@ function overallScore(avg) {
 }
 var total = 0;
 const wordsScoreArray_int =  (wordsScoreArray).map(function(x){return parseInt(x)});;
-
 for (let i = 0; i < wordsScoreArray_int.length; i++) {
 	total += wordsScoreArray_int[i]+=5;
 }
@@ -144,31 +141,28 @@ var avg = total / wordsScoreArray_int.length;
 console.log(avg);
 const overAllScoreParagraph = document.getElementById('overall-score');
 overAllScoreParagraph.innerHTML = overallScore(avg);
-
 		const textArray = document.getElementById('yy').innerHTML.split(',');
 		// console.log(textArray);
-        for (let i = 0; i < wordsFromDom.length; i++) {
+        for (let i = 0; i < wordsFromDom.length; i++) {
 			wordsFromDom[i].outerHTML = wordsFromDom[i].outerHTML.split('nUm').join(outputIcon[i]);
 			wordsFromDom[i].outerHTML = wordsFromDom[i].outerHTML.split('with').join(outputPositiveOrNegativeText[i]);
 			wordsFromDom[i].outerHTML = wordsFromDom[i].outerHTML.split('HTML').join(`Score: ${outputScore[i]}`);
 		}
 			
 		
-
 // 		const textArray = (nlp(article.content).sentences().data()).map((index) => { 
-//                       return index.text 
-//                       }); 
-        for (let i = 0; i < textArray.length; i++) {
-
+//                       return index.text 
+//                       }); 
+        for (let i = 0; i < textArray.length; i++) {
 	for (let j = 0; j < allWords.length; j++) { 
-                         textArray[i] = textArray[i].replace((new RegExp(allWords[j], 'gi')), "<mark>" +allWords[j]+ "</mark>"); 
-                         const scores = sentiment.analyze(textArray[i]).score 
-                             wordsScoreArray.push(sentiment.analyze(allWords[j]).score) 
-                         } 
+                         textArray[i] = textArray[i].replace((new RegExp(allWords[j], 'gi')), "<mark>" +allWords[j]+ "</mark>"); 
+                         const scores = sentiment.analyze(textArray[i]).score 
+                             wordsScoreArray.push(sentiment.analyze(allWords[j]).score) 
+                         } 
 }
-            // console.log(outputScore)
-    // sent[0].innerHTML = '<mark>Omar</mark>';
+            // console.log(outputScore)
+    // sent[0].innerHTML = '<mark>Omar</mark>';
 
-    </script>
+	</script>
 
 <%- include partials/footer.ejs %>

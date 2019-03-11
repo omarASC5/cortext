@@ -1,9 +1,10 @@
-
+.paragraph-styling {
+	text-indent: 2em;
+}
 
 article {
 	border: 3px solid black;
 }
-
 
 .highlight {
 	background: yellow;
@@ -17,24 +18,12 @@ article {
 
 
 
-
+.flex-item {
+	flex-grow: 1;
+	 flex-shrink: 1;
+}
 
 #main {
-
-	/* padding-top: 4em; */
-	/* margin-top: 4em; */
-	/* display: flex;
-	flex-direction: column; */
-	/* flex-wrap: wrap; */
-	/* flex-grow: 0; */
-	
+	width: 100vw;
+	height: 100%;
 }
-.score-paragraph-styles {
-	/* display: flex;
-	align-self: flex-end; */
-}
-
-article {
-
-}
-
