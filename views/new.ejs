@@ -108,14 +108,13 @@
 	let outputPositiveOrNegativeText = [];
 	let outputScore = [];
 
-	console.log(wordsScoreArray);
+	
 
 	//Fixes the mark tag issue
 	for (let i = 0; i < sent.length; i++) {
 
 		sent[i].innerHTML = sent[i].innerHTML.split('&lt;mark&gt;').join(`<mark class='highlight' data-toggle='tooltip' data-placement='bottom' data-html='true' title='<h1>nUm</h1> <h2>with</h2> <b>HTML</b>'>`);
-		sent[i].innerHTML = sent[i].innerHTML.split('&lt;/mark&gt;').join('</mark>');
-			
+		sent[i].innerHTML = sent[i].innerHTML.split('&lt;/mark&gt;').join('</mark>');	
 	}
 
 	//All of the words in the article that have been highlghted
@@ -124,12 +123,21 @@
 	for (let i = 0; i < wordsFromDom.length; i++) {
 		allWords.push(wordsFromDom[i].innerHTML); //Shifts array from HTML to just all of the words
 	}
-
-	console.log(allWords);
+	
 	
 
 
-	TODO: //Fix Words score array and use allwords
+	//Fix Words score array and use allwords
+	allWords.sort(function(a, b) {
+		let i ;
+  		if (a == b){
+			  i = allWords.indexOf(a);
+			  wordsScoreArray.splice(i,0,wordsScoreArray[i]);
+		  }
+	});
+	console.log(wordsScoreArray);
+	console.log(allWords);
+
 
 	//Creates three other arrays
 		//One array with Icons in order.
@@ -143,8 +151,6 @@
 	}
 
 		
-	
-
 	//Puts in the tags with the image, text and score
 	for (let i = 0; i < wordsFromDom.length; i++) {
 		wordsFromDom[i].outerHTML = wordsFromDom[i].outerHTML.split('nUm').join(outputIcon[i]);
