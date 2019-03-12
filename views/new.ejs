@@ -42,8 +42,9 @@
 						 </p>
 					 <% } %>
 
-					 
-				<p id="overall-score" class="text-center h3 py-3"></p>
+				<u>
+					<p id="overall-score" class="text-center h3 py-3"></p>
+				</u>	 
 
 			<span>
 				<!-- URL of article. -->
@@ -83,11 +84,11 @@
 		// comparees if the score is negative or positive
 		if (score > 5) {
 				output.state = "Positive";
-				output.icon = "<i class='fas fa-thumbs-up'></i>";
+				output.icon = "<i class='fas fa-thumbs-up text-success pt-3'></i>";
 				output.color = "green-tool-tip";
 		}  else {
 				output.state = "Negative";
-				output.icon = "<i class='fas fa-thumbs-down'></i>";
+				output.icon = "<i class='fas fa-thumbs-down text-danger pt-3' style='color: red;'></i>";
 				output.color = "red-tool-tip";
 		}			
 		return output;
