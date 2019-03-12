@@ -1,56 +1,42 @@
 <%- include partials/header.ejs %>
 <link rel="stylesheet" href="stylesheets/main.css">
 </head>
-<body class="tinted-image">
 
-	<!-- Header Container: Title & Short Description -->
-	<header class="container jumbotron tinted-image">
-		<h1 class="display-1 text-center">Cor<span>text</span> <!--<img src="https://go.forrester.com/wp-content/uploads/2011/11/bt_logo_0.png" alt="Bias Tester Logo">--></h1>
-		<p class="lead">
-			More and more people call certain news articles and sources biased. 
-			Others call some "fake news" (Like Señor Trump). Our website is designed 
-			to be a part of that conversation.
-		</p>
-	</header>
-	
-	<!-- Submit News Link Container -->
-	<main class="container px-0">
-		<div class="form-group">
-			<form action="/index" method="POST" class="d-flex justify-content-center align-items-center flex-column">
-				<p>News Article URL: 
-					<a class="example-link" href="https://www.cnn.com/2019/02/25/politics/alva-johnson-donald-trump-lawsuit/index.html">
-						https://www.cnn.com/2019/02/25/politics/alva-johnson-donald-trump-lawsuit/index.html
-					</a>
-				</p>
-				<input type="text" name="url" id="url" class="form-control form-control-lg w-50" placeholder="Paste News Article URL...">
-				<button class="w-50 btn btn-primary mt-4 mb-3">Analyze</button>
-				<small class="w-100 text-center">Thanks!</small>
-			</form>
+<body class="">
+	<div class="jumbotron jumbotron-fluid tinted-image d-flex align-items-center">
+			<div id="main" class="container mt-5">
+				<h1 class="text-center"><span>Cor</span>text</h1>
+				<p class="lead pt-3 text-center">Cortext is a website that helps you detect bias, opinions, and fake news
+						<a href="#">Learn More <i class="fas fas-1x fa-arrow-right"></i></a></p>
+				<form action="/index" method="POST">
+				
+					<div class="input-group">
+						<input type="text" id="url-box" name="url" class="form-control" placeholder="Paste News Article URL..." aria-label="Paste News Article URL...">
+						<div class="input-group-append">
+							<button class="btn btn-primary" type="submit">Submit</button>
+						</div>
+					</div>		
+				</form>
+			</div>
+	</div>
+	<div class="container">
+		<h2 class="text-center">How it Works?</h2>
+		<div class="row py-4">
+			<div class="col-sm-6 col-md-4 text-center">
+				<img class="img-fluid icons-how-it-works" src="./images/inbox.png" alt="">
+				<p class="pt-5">1. Find an article and bring it to Context.</p>
+			</div>
+			<div class="col-sm-6 col-md-4 text-center">
+				<img class="img-fluid icons-how-it-works" src="./images/highlighter.png" alt="">
+				<p class="pt-5">2. We parse the article for key words and phrases analyzing the sentiment of the article.</p>
+			</div>
+			<div class="col-sm-6 col-md-4 text-center">
+				<img class="img-fluid icons-how-it-works" src="./images/letter.png" alt="">
+				<p class="pt-5">3. We re-present the article marked up and highlighted with ratings and scores.</p>
+			</div>
+
 		</div>
-	
-		<!-- How it Works? Container -->
-		<article class="d-flex align-items-center flex-column">
-			<h2 class="h1">How it Works?</h2>
-			<ol>
-				<li>We parse the website, extracting the article</li>
-				<li>We process key words and phrases using <a class="example-link" href="http://www.compromise.cool">compromise.cool</a></li>
-				<li>Using that information, we rank each sentence as positive, neutral, or negative</li>
-			</ol>
-		</article>
-	</main>
-	
-	
-	<!-- Social Media Container -->
-	<footer class="container">
-		<div class="d-flex justify-content-center">
-			<a href="#"><i class="fab fa-facebook fa-2x px-1"></i></a>
-			<a href="#"><i class="fab fa-twitter-square fa-2x px-1"></i></a>
-		</div>
-		<!-- Copyright Container -->
-		<div class="text-center pb-4">
-			<small>&copy Copyright 2019 - Cortext -cortext.com</small>
-		</div>
-	</footer>
+	</div>
 </body>
 
 <%- include partials/footer.ejs %>

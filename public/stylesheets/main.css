@@ -1,21 +1,23 @@
 html, body {
 	/* font-family: 'Noto Serif JP', serif; */
 	font-size: 18px;
+	height: 100%;
+   width: 100%;
+
 }
 
-form {
-	height: 20rem;
-	background: rgba(120, 149, 200, 0.4);
-	border-radius: 1rem;
+h1 {
+	font-size: 3rem !important;
 }
+
 
 .jumbotron {
 	background: none;
+	color: #ffffff;
+
 }
 
-html, body {
-	color: white;
-}
+
 
 li {
 	line-height: 2;
@@ -34,6 +36,10 @@ h2 {
 	text-decoration: underline;
 }
 
+.icons-how-it-works {
+	width: 100px;
+}
+
 .tinted-image {
 	background:
 	  linear-gradient(rgba(42, 38, 61, 0.5),
@@ -49,3 +55,11 @@ h2 {
   background-position: top; 
 	min-height: 80%;
 	}
+
+#url-box {
+	height: 3.25rem;
+}
+
+#main {
+	height: 50%;
+}
