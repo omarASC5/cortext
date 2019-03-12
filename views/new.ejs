@@ -32,7 +32,7 @@
 					 <% const wordsArray = sentimentScoreSentence.words; %>
  <!-- Replace wordsArray with allWords array -->
 					 <% for (let j = 0; j < wordsArray.length; j++) { %>
-						 <% textArray[i] = textArray[i].replace((new RegExp(wordsArray[j], 'gi')), "<mark>" +wordsArray[j]+ "</mark>"); %>
+						 <% textArray[i] = textArray[i].replace((new RegExp(wordsArray[j])), "<mark>" +wordsArray[j]+ "</mark>"); %>
 						 <% const scores = sentimentScoreSentence.score %>
 							 <% wordsScoreArray.push(sentiment.analyze(wordsArray[j]).score) %>
 						 <% } %>
