@@ -32,7 +32,7 @@
 					 <% const wordsArray = sentimentScoreSentence.words; %>
  <!-- Replace wordsArray with allWords array -->
 					 <% for (let j = 0; j < wordsArray.length; j++) { %>
-						 <% textArray[i] = textArray[i].replace((new RegExp(wordsArray[j])), "<mark>" +wordsArray[j]+ "</mark>"); %>
+						 <% textArray[i] = textArray[i].replace((new RegExp(wordsArray[j], 'gi')), "<mark>" +wordsArray[j]+ "</mark>"); %>
 						 <% const scores = sentimentScoreSentence.score %>
 							 <% wordsScoreArray.push(sentiment.analyze(wordsArray[j]).score) %>
 						 <% } %>
@@ -123,13 +123,30 @@
 	}
 
 	//All of the words in the article that have been highlghted
-	const wordsFromDom = document.body.getElementsByClassName('highlight');	
-	let allWords = [];
-	for (let i = 0; i < wordsFromDom.length; i++) {
-		allWords.push(wordsFromDom[i].innerHTML); //Shifts array from HTML to just all of the words
-	}
-	
-	
+    const wordsFromDom = document.body.getElementsByClassName('highlight'); 
+    let allWords = [];
+    for (let i = 0; i < wordsFromDom.length; i++) {
+        allWords.push(wordsFromDom[i].innerText); //Shifts array from HTML to just all of the words
+        //Use innerText instead of inner html
+    }
+
+    //This is a much larger bug, there is no wat to properly fix it, but we can scm it for now.
+    //Fix? Words score array and use allwords
+    allWords.sort(function(a, b) {
+
+    if (wordsScoreArray.length == allWords.length){
+            return
+        }
+
+    if (a == b){
+             let i = allWords.indexOf(a);
+             wordsScoreArray.splice(i,0,wordsScoreArray[i]);
+        }
+        
+    });
+    console.log(wordsScoreArray);
+    console.log(allWords);
+
 
 
 	//Fix Words score array and use allwords
