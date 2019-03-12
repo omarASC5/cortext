@@ -43,18 +43,18 @@
 					 <% } %>
 
 					 
-		
+				<p id="overall-score" class="text-center h3 py-3"></p>
+
 			<span>
 				<!-- URL of article. -->
-				Link to original article: 
-				<a href="<%=article.url%>"><%= article.url%></a>
+				<div class="text-center">
+					<a href="<%=article.url%>" class="btn btn-md btn-outline-primary">Link to Original Article</a>
+				</div>
+
 			</span>
+
 			</article>
 
-			<strong>
-
-				<p id="overall-score" class="h3 text-center"></p>
-			</strong>
 
 </div>
 <script type="text/javascript" defer>
@@ -76,16 +76,19 @@
 		let output = {
 			state: "",
 			icon: "",
-			score: score
+			score: score,
+			color: ""
 		};
 
 		// comparees if the score is negative or positive
 		if (score > 5) {
 				output.state = "Positive";
 				output.icon = "<i class='fas fa-thumbs-up'></i>";
+				output.color = "green-tool-tip";
 		}  else {
 				output.state = "Negative";
 				output.icon = "<i class='fas fa-thumbs-down'></i>";
+				output.color = "red-tool-tip";
 		}			
 		return output;
 	}
@@ -94,9 +97,9 @@
 	function overallScore(avg) {
 		let output;
 		if (avg > 5) {
-			output = "Overall, the article shows positive slant towards the subject matter";
+			output = "Overall, the article shows positive slant towards the subject matter.";
 		} else {
-			output = "Overall, the article shows negative slant towards the subject matter";
+			output = "Overall, the article shows negative slant towards the subject matter.";
 		}
 		return output;
 	}
@@ -107,13 +110,14 @@
 	let outputIcon = [];
 	let outputPositiveOrNegativeText = [];
 	let outputScore = [];
+	let outputColor = [];
 
 	
 
 	//Fixes the mark tag issue
 	for (let i = 0; i < sent.length; i++) {
 
-		sent[i].innerHTML = sent[i].innerHTML.split('&lt;mark&gt;').join(`<mark class='highlight' data-toggle='tooltip' data-placement='bottom' data-html='true' title='<h1>nUm</h1> <h2>with</h2> <b>HTML</b>'>`);
+		sent[i].innerHTML = sent[i].innerHTML.split('&lt;mark&gt;').join(`<mark class='highlight cOlor' data-toggle='tooltip' data-placement='bottom' data-html='true' title='<h1> nUm </h1> <h2>with</h2> <b>HTML</b>'>`);
 		sent[i].innerHTML = sent[i].innerHTML.split('&lt;/mark&gt;').join('</mark>');	
 	}
 
@@ -148,6 +152,7 @@
 		outputIcon.push(scoreThatCreatesToolTip(wordsScoreArray_int).icon); 
 		outputPositiveOrNegativeText.push(scoreThatCreatesToolTip(wordsScoreArray_int).state); 
 		outputScore.push(scoreThatCreatesToolTip(wordsScoreArray_int).score);
+		outputColor.push(scoreThatCreatesToolTip(wordsScoreArray_int).color);
 	}
 
 		
@@ -156,6 +161,7 @@
 		wordsFromDom[i].outerHTML = wordsFromDom[i].outerHTML.split('nUm').join(outputIcon[i]);
 		wordsFromDom[i].outerHTML = wordsFromDom[i].outerHTML.split('with').join(outputPositiveOrNegativeText[i]);
 		wordsFromDom[i].outerHTML = wordsFromDom[i].outerHTML.split('HTML').join(`Score: ${outputScore[i]}`);
+		wordsFromDom[i].outerHTML = wordsFromDom[i].outerHTML.split('cOlor').join(outputColor[i]);
 	}
 
 	//Gets the total number from all of the words I think

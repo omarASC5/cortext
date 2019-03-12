@@ -1,3 +1,8 @@
+html, body {
+	/* font-family: 'Noto Serif JP', serif; */
+	font-size: 18px;
+}
+
 form {
 	height: 20rem;
 	background: rgba(120, 149, 200, 0.4);

@@ -1,9 +1,19 @@
+html, body {
+	font-family: 'Noto Serif JP', serif;
+	font-size: 18px;
+}
+
+body {
+	background-image: url("../images/article\ collage.jpg");
+}
+
 .paragraph-styling {
 	text-indent: 2em;
 }
 
 article {
 	border: 3px solid black;
+	background-color: #ffffff;
 }
 
 .highlight {
@@ -14,7 +24,27 @@ article {
 	font-size: 24px;
 	border: 1px solid black;
 }
+/* 
+ .tooltip-inner {
+	background-color: #ff0000 !important;
+	color: #fff;
+}
 
+.red-tool-tip .tooltip.top .tooltip-arrow {
+	border-top-color: red;
+}
+
+.red-tool-tip > .tooltip.right .tooltip-arrow {
+	border-right-color: red;
+}
+  
+.tooltip.bottom .tooltip-arrow {
+	border-bottom-color: #00acd6;
+}
+  
+.tooltip.left .tooltip-arrow {
+	border-left-color: #00acd6;
+} */
 
 
 
