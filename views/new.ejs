@@ -49,7 +49,7 @@
 			<span>
 				<!-- URL of article. -->
 				<div class="text-center">
-					<a href="<%=article.url%>" class="btn btn-md btn-outline-primary">Link to Original Article</a>
+					<a href="<%=article.url%>" target="_blank" class="btn btn-md btn-outline-primary">Link to Original Article</a>
 				</div>
 
 			</span>
@@ -130,7 +130,7 @@
         //Use innerText instead of inner html
     }
 
-    //This is a much larger bug, there is no wat to properly fix it, but we can scm it for now.
+    //This is a much larger bug, there is no wat to properly fix it, but we can scam it for now.
     //Fix? Words score array and use allwords
     allWords.sort(function(a, b) {
 
@@ -146,20 +146,6 @@
     });
     console.log(wordsScoreArray);
     console.log(allWords);
-
-
-
-	//Fix Words score array and use allwords
-	allWords.sort(function(a, b) {
-		let i ;
-  		if (a == b){
-			  i = allWords.indexOf(a);
-			  wordsScoreArray.splice(i,0,wordsScoreArray[i]);
-		  }
-	});
-	console.log(wordsScoreArray);
-	console.log(allWords);
-
 
 	//Creates three other arrays
 		//One array with Icons in order.
