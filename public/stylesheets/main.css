@@ -88,7 +88,7 @@ h2 {
   }
   
   .text {
-	background-color: white;
+	/* background-color: white; */
 	color: black;
 	font-size: 10vw; 
 	font-weight: bold;
