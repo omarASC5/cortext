@@ -3,10 +3,13 @@
 
 		<div class="container">
 				<% global.document = new JSDOM(html).window.document; %>
-			<article class="p-5 m-5 context" id="art">
+			<article class="p-4 my-5 pt-sm-4 px-sm-5 pb-sm-5 my-sm-5 pt-lg-4 px-lg-5 pb-lg-5 m-lg-5 context" id="art">
+				<div class="text-center">
+					<a href="#link-to-original" class="btn btn-md btn-outline-primary">Scroll to Overall Score</a>
+				</div>
 				<% const sentiment = new Sentiment() %>
 				<!-- Title of the article. -->
-				<h2 class="h1 text-left"><%=article.title%></h2>
+				<h2 class="h3 text-left pt-3"><%=article.title%></h2>
 		
 				<!-- Time article was published. -->
 				<p class="lead"><%=article.publishedTime%></p>
@@ -49,7 +52,7 @@
 			<span>
 				<!-- URL of article. -->
 				<div class="text-center">
-					<a href="<%=article.url%>" target="_blank" class="btn btn-md btn-outline-primary">Link to Original Article</a>
+					<a href="<%=article.url%>" id="link-to-original" target="_blank" class="btn btn-md btn-outline-primary">Link to Original Article</a>
 				</div>
 
 			</span>

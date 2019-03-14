@@ -6,9 +6,9 @@
 	<div class="jumbotron jumbotron-fluid tinted-image d-flex align-items-center">
 			<div id="main" class="container mt-5">
 				<h1 class="text-center d-flex justify-content-center">
-					<span class="pl-3" style="background: #ffffff !important;">Cor<img src="./images/text.png" alt="" class="px-0 pb-3" style="display: inline; height: 200px"></span></h1>
+					<span class="pl-3" style="background: #ffffff !important;">Cor<img src="./images/text.png" alt="" class="px-0 pb-3" style="display: inline; height: 200px;"></span></h1>
 				<p class="lead pt-3 text-center">Cortext is a website that helps you detect bias, opinions, and fake news
-						<a href="#">Learn More <i class="fas fas-1x fa-arrow-right"></i></a></p>
+						<a href="#how-it-works">Learn More <i class="fas fas-1x fa-arrow-right"></i></a></p>
 				<form action="/index" method="POST">
 				
 					<div class="input-group">
@@ -21,24 +21,25 @@
 			</div>
 	</div>
 
-	<div class="container">
+	<div class="container" id="how-it-works">
 		<h2 class="text-center">How it Works?</h2>
 		<div class="row py-4">
 			<div class="col-sm-6 col-md-4 text-center">
-				<img class="img-fluid icons-how-it-works" src="./images/inbox.png" alt="">
+				<img class="img-fluid icons-how-it-works" src="./images/inbox.png" alt="inbox image">
 				<p class="pt-5">1. Find an article and bring it to Cortext.</p>
 			</div>
 			<div class="col-sm-6 col-md-4 text-center">
-				<img class="img-fluid icons-how-it-works" src="./images/highlighter.png" alt="">
+				<img class="img-fluid icons-how-it-works" src="./images/highlighter.png" alt="highlighter image">
 				<p class="pt-5">2. We parse the article for key words and phrases analyzing the sentiment of the article.</p>
 			</div>
 			<div class="col-sm-6 col-md-4 text-center">
-				<img class="img-fluid icons-how-it-works" src="./images/letter.png" alt="">
+				<img class="img-fluid icons-how-it-works" src="./images/letter.png" alt="letter image">
 				<p class="pt-5">3. We re-present the article marked up and highlighted with ratings and scores.</p>
 			</div>
 
 		</div>
 	</div>
+		
 </body>
 
 <%- include partials/footer.ejs %>
