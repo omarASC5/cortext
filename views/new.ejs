@@ -100,11 +100,15 @@
 	// Overall thing at the end, is the averafe score above or below 5
 	function overallScore(avg) {
 		let output;
-		if (avg > 5) {
-			output = "Overall, the article shows positive slant towards the subject matter.";
-		} else {
-			output = "Overall, the article shows negative slant towards the subject matter.";
+		if (avg > 5.5) {
+			output = "Overall, the article shows a positive slant towards the subject matter.";
+		} else if (avg < 4.5){
+			output = "Overall, the article shows a negative slant towards the subject matter.";
 		}
+		else {
+			output = "Overall, the article shows a neutral slant towards the subject matter.";
+		}
+		console.log(avg);
 		return output;
 	}
 
