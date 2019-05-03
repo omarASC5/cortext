@@ -19,6 +19,14 @@ app.set("views", "views"); // Tells EJS the path to the "views" directory
 app.use(bodyParser.urlencoded({extended: true})); // bodyParser config
 // const sentiment = new Sentiment(); // Set's up thing for sentiment
 
+// Database
+const db = require('./config/database');
+const Link = require('./models/Links');
+// Test DB
+db.authenticate()
+.then(() => console.log('Database Connected...'))
+.catch(err => console.log(`Error: ${err}`));
+
 // Index Route, redirects to display homepage
 app.get("/", (req, res, next) => {
 	res.redirect("index");
@@ -26,7 +34,13 @@ app.get("/", (req, res, next) => {
 
 // Renders the index page
 app.get("/index", (req, res, next) => {
-	res.render("index");
+	Link.findAll()
+		.then((links) => {
+			let url = links.pop().url;
+			return url;
+		}).then(((url) => {
+			res.render("index", {url: url});
+		}));
 })
 
 
@@ -37,32 +51,55 @@ app.post("/index", (req, res, next) => {
 		extract 
 	  } = require('article-parser');
 	//   User-entered URL
-	  let url = req.body.url;
+	let url = req.body.url;
+	const data = {
+		// Make this url come from the chrome extension
+		url: url
+	}
 
-	  extract(url).then((article) => {
-		  const articleInHTMLForm = article.content;
-			const articleInTextForm = articleInHTMLForm
-				.replace(/<\/?[^>]+(>|$)/g, " ") //Replaces the Tags and leaves a space.
-				.replace(/  +/g, " ") //Replaces double spaces and leaves a single.
-				.replace(/ \.+/g, "."); //Replaces the space between a word and the period to end a sentence.
+	Link.create({
+		url: data.url
+	})
+	// .then((link) => {
+	// 	console.log('link')
+	// })
+	// .catch((err) => console.log(`Error: ${err}`));
 
-			//title, publishedTime, author, source, content, url,
-			//Formatts all of the neccesary inforamtion into one object
-			const articleFormatting = {
-				title: article.title,
-				publishedTime: article.publishedTime,
-				author: article.author,
-				source: article.source,
-				content: articleInTextForm,
-				url: article.url
-			};
+	Link.findAll()
+		.then((links) => {
+			let url = links.pop().url;
+			return url;
+		}).then(((url) => {
+			console.log(url);
+			extract(url).then((article) => {
+			const articleInHTMLForm = article.content;
+			  const articleInTextForm = articleInHTMLForm
+				  .replace(/<\/?[^>]+(>|$)/g, " ") //Replaces the Tags and leaves a space.
+				  .replace(/  +/g, " ") //Replaces double spaces and leaves a single.
+				  .replace(/ \.+/g, "."); //Replaces the space between a word and the period to end a sentence.
+	
+			  //title, publishedTime, author, source, content, url,
+			  //Formatts all of the neccesary inforamtion into one object
+			  const articleFormatting = {
+				  title: article.title,
+				  publishedTime: article.publishedTime,
+				  author: article.author,
+				  source: article.source,
+				  content: articleInTextForm,
+				  url: article.url
+			  };
+	
+		  return articleFormatting;
+		  }).then((article) => {
+			  res.render("new", {article: article, Sentiment: Sentiment, html: html, stringToDom: stringToDom, JSDOM: JSDOM}); //Must be an object
+		}).catch((err) => {
+		  console.log(err);
+		})
+	})
+	)
+		.catch(err => console.log(`Error: ${err}`))
+	//   console.log(url);
 
-		return articleFormatting;
-		}).then((article) => {
-			res.render("new", { article: article, Sentiment: Sentiment, html: html, stringToDom: stringToDom, JSDOM: JSDOM}); //Must be an object
-	  }).catch((err) => {
-		console.log(err);
-	  });
 });
 
 
