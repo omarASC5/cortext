@@ -19,6 +19,15 @@ app.set("views", "views"); // Tells EJS the path to the "views" directory
 app.use(bodyParser.urlencoded({extended: true})); // bodyParser config
 // const sentiment = new Sentiment(); // Set's up thing for sentiment
 
+const { Client } = require('pg');
+
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: true,
+});
+
+client.connect();
+
 // Index Route, redirects to display homepage
 app.get("/", (req, res, next) => {
 	res.redirect("index");
@@ -69,7 +78,18 @@ app.post('/chrome', function(req, res){
 	// var obj = {};
 	// console.log('body: ' + JSON.stringify(req.body));
 	// res.render("chrome");
-	req.body.title, req.body.url, req.body.summary, req.body.tags
+	// req.body.title, req.body.url, req.body.summary, req.body.tags
+	const text = 'INSERT INTO links(url) VALUES($1) RETURNING *'
+	const values = ['brian.m.carlson@gmail.com']
+
+	// promise
+	client.query(text, values)
+	.then(res => {
+	console.log(res.rows[0])
+	// { name: 'brianc', email: 'brian.m.carlson@gmail.com' }
+	})
+	.catch(e => console.error(e.stack))
+
 	res.render("chrome", {
 		title: req.body.title,
 		url: req.body.url,
