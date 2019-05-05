@@ -88,7 +88,7 @@ app.post('/chrome', function(req, res){
 	// promise
 	client.query(text, values)
 	.then(res => {
-	let url = res.rows[res.length-1];
+	let url = res.rows[0];
 	extract(url).then((article) => {
 		const articleInHTMLForm = article.content;
 		  const articleInTextForm = articleInHTMLForm
