@@ -113,9 +113,13 @@ app.post('/chrome', function(req, res){
 			title: req.body.title,
 			url: req.body.url,
 			summary: req.body.summary,
-			tags: req.body.tags
+			tags: req.body.tags,
+			article: article, 
+			Sentiment: Sentiment, 
+			html: html, 
+			stringToDom: stringToDom, 
+			JSDOM: JSDOM
 		});
-		  res.render("chrome", { article: article, Sentiment: Sentiment, html: html, stringToDom: stringToDom, JSDOM: JSDOM}); //Must be an object
 	}).catch((err) => {
 	  console.log(err);
 	});
