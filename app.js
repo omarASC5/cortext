@@ -69,7 +69,13 @@ app.post('/chrome', function(req, res){
 	// var obj = {};
 	// console.log('body: ' + JSON.stringify(req.body));
 	// res.render("chrome");
-	res.send(req.body);
+	req.body.title, req.body.url, req.body.summary, req.body.tags
+	res.render("chrome", {
+		title: req.body.title,
+		url: req.body.url,
+		summary: req.body.summary,
+		tags: req.body.tags
+	});
 });
 
 app.get('/chrome', function(req, res) {
