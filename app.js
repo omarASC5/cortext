@@ -65,6 +65,12 @@ app.post("/index", (req, res, next) => {
 	  });
 });
 
+app.post('/chrome', function(req, res){
+	var obj = {};
+	console.log('body: ' + JSON.stringify(req.body));
+	res.send(req.body);
+});
+
 
 // Server Setup/Initialization
 app.listen(process.env.PORT || keys.PORT, () => {
