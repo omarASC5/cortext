@@ -80,12 +80,12 @@ app.post('/chrome', function(req, res){
 	// res.render("chrome");
 	// req.body.title, req.body.url, req.body.summary, req.body.tags
 	const text = 'INSERT INTO links(url) VALUES($1) RETURNING *'
-	const values = ['brian.m.carlson@gmail.com']
+	const values = [req.body.url]
 
 	// promise
 	client.query(text, values)
 	.then(res => {
-	console.log(res.rows[0])
+	console.log(res.rows[rows.length-1])
 	// { name: 'brianc', email: 'brian.m.carlson@gmail.com' }
 	})
 	.catch(e => console.error(e.stack))
