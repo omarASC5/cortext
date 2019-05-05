@@ -5,8 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app",
-    "dev": "nodemon app.js"
+    "start": "node app"
   },
   "repository": {
     "type": "git",
@@ -26,10 +25,7 @@
     "express": "^4.16.4",
     "html-parse-stringify": "^1.0.3",
     "jsdom": "^13.2.0",
-    "knex": "^0.16.5",
     "nodemon": "^1.18.10",
-    "pg": "7.10.0",
-    "pg-hstore": "^2.3.2",
     "request": "^2.88.0",
     "sentiment": "^5.0.1",
     "string-to-dom": "^0.1.5"

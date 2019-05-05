@@ -10,10 +10,10 @@
 				</h1>
 				<p class="lead pt-3 text-center">Cortext is a website that helps you detect bias, opinions, and fake news
 						<a href="#how-it-works">Learn More <i class="fas fas-1x fa-arrow-right"></i></a></p>
-				<form action="/index" method="POST" name="myForm">
+				<form action="/index" method="POST">
 				
 					<div class="input-group">
-						<input type="text" id="url-box" name="url" class="form-control" value="<%=url%>" placeholder="Paste News Article URL..." aria-label="Paste News Article URL...">
+						<input type="text" id="url-box" name="url" class="form-control" placeholder="Paste News Article URL..." aria-label="Paste News Article URL...">
 						<div class="input-group-append">
 							<button class="btn btn-primary" type="submit">Submit</button>
 						</div>
@@ -40,12 +40,7 @@
 
 		</div>
 	</div>
-	<script>
 		
-		window.onload = function(){
-			document.forms['myForm'].submit();
-		}
-	</script>
 </body>
 
 <%- include partials/footer.ejs %>
