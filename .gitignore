@@ -1,5 +1,5 @@
 # Ignores the config file
-config
+# config
 
 # Ignores the node_modules folder
 node_modules
