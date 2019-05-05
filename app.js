@@ -66,10 +66,15 @@ app.post("/index", (req, res, next) => {
 });
 
 app.post('/chrome', function(req, res){
-	var obj = {};
-	console.log('body: ' + JSON.stringify(req.body));
+	// var obj = {};
+	// console.log('body: ' + JSON.stringify(req.body));
+	// res.render("chrome");
 	res.send(req.body);
 });
+
+app.get('/chrome', function(req, res) {
+	res.send('hi');
+})
 
 
 // Server Setup/Initialization
