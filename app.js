@@ -75,6 +75,9 @@ app.post("/index", (req, res, next) => {
 });
 
 app.post('/chrome', function(req, res){
+	const {
+		extract 
+	  } = require('article-parser');
 	// var obj = {};
 	// console.log('body: ' + JSON.stringify(req.body));
 	// res.render("chrome");
@@ -85,17 +88,47 @@ app.post('/chrome', function(req, res){
 	// promise
 	client.query(text, values)
 	.then(res => {
-	console.log(res.rows[rows.length-1])
+	let url = res.rows[rows.length-1];
+	extract(url).then((article) => {
+		const articleInHTMLForm = article.content;
+		  const articleInTextForm = articleInHTMLForm
+			  .replace(/<\/?[^>]+(>|$)/g, " ") //Replaces the Tags and leaves a space.
+			  .replace(/  +/g, " ") //Replaces double spaces and leaves a single.
+			  .replace(/ \.+/g, "."); //Replaces the space between a word and the period to end a sentence.
+
+		  //title, publishedTime, author, source, content, url,
+		  //Formatts all of the neccesary inforamtion into one object
+		  const articleFormatting = {
+			  title: article.title,
+			  publishedTime: article.publishedTime,
+			  author: article.author,
+			  source: article.source,
+			  content: articleInTextForm,
+			  url: article.url
+		  };
+
+	  return articleFormatting;
+	  }).then((article) => {
+		res.render("chrome", {
+			title: req.body.title,
+			url: req.body.url,
+			summary: req.body.summary,
+			tags: req.body.tags
+		});
+		  res.render("chrome", { article: article, Sentiment: Sentiment, html: html, stringToDom: stringToDom, JSDOM: JSDOM}); //Must be an object
+	}).catch((err) => {
+	  console.log(err);
+	});
 	// { name: 'brianc', email: 'brian.m.carlson@gmail.com' }
 	})
 	.catch(e => console.error(e.stack))
 
-	res.render("chrome", {
-		title: req.body.title,
-		url: req.body.url,
-		summary: req.body.summary,
-		tags: req.body.tags
-	});
+	// res.render("chrome", {
+	// 	title: req.body.title,
+	// 	url: req.body.url,
+	// 	summary: req.body.summary,
+	// 	tags: req.body.tags
+	// });
 });
 
 app.get('/chrome', function(req, res) {
