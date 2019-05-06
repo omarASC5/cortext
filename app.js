@@ -35,8 +35,18 @@ app.get("/", (req, res, next) => {
 
 // Renders the index page
 app.get("/index", (req, res, next) => {
-	res.render("index");
-})
+	const query = {
+		text: 'SELECT * FROM links ORDER BY id DESC LIMIT 1'
+	}
+
+	// promise
+	client.query(query)
+		.then(res => {
+			return res.rows[0].url;
+		}).then((url) => {
+			res.render("index", {url: url});
+		})
+});
 
 
 // Post route, the forms sends a URL to be exported as an object with article feautures 
