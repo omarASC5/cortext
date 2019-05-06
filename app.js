@@ -54,7 +54,7 @@ app.post("/index", (req, res, next) => {
 		// promise
 		client.query(query)
 			.then(res => {
-				console.log(res.rows.url)
+				console.log(res.rows)
 			})
 			.catch(e => {
 				console.error(e.stack)
@@ -97,7 +97,7 @@ app.post('/chrome', function(req, res){
 	// promise
 	client.query(text, values)
 	.then(res => {
-	console.log(res.rows[0])
+	// console.log(res.rows[0])
 	// { name: 'brianc', email: 'brian.m.carlson@gmail.com' }
 	})
 	.catch(e => console.error(e.stack))
