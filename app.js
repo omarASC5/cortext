@@ -58,6 +58,7 @@ app.post("/index", (req, res, next) => {
 			}).then((url) => {
 				console.log(url);
 				console.log(extract(url));
+				return(extract(url));
 			}).then((article) => {
 				const articleInHTMLForm = article.content;
 				const articleInTextForm = articleInHTMLForm
