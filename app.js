@@ -57,9 +57,7 @@ app.post("/index", (req, res, next) => {
 				return res.rows[0].url;
 			}).then((url) => {
 				console.log(url);
-				console.log(extract(url));
-				return(extract(url));
-			}).then((article) => {
+				(extract(url)).then((article) => {
 				const articleInHTMLForm = article.content;
 				const articleInTextForm = articleInHTMLForm
 					.replace(/<\/?[^>]+(>|$)/g, " ") //Replaces the Tags and leaves a space.
@@ -75,14 +73,15 @@ app.post("/index", (req, res, next) => {
 					source: article.source,
 					content: articleInTextForm,
 					url: article.url
-				};
+				}
 	
 			return articleFormatting;
-			}).then((article) => {
-				res.render("new", { article: article, Sentiment: Sentiment, html: html, stringToDom: stringToDom, JSDOM: JSDOM}); //Must be an object
-			}).catch((err) => {
-			console.log(err);
-			});
+			})
+		}).then((article) => {
+			res.render("new", { article: article, Sentiment: Sentiment, html: html, stringToDom: stringToDom, JSDOM: JSDOM}); //Must be an object
+		}).catch((err) => {
+		console.log(err);
+		})
 			// .catch(e => {
 			// 	console.error(e.stack)
 			// })
