@@ -48,14 +48,13 @@ app.post("/index", (req, res, next) => {
 	//   User-entered URL
 	  let url = req.body.url;
 	  const query = {
-			text: 'SELECT * FROM links ORDER BY id DESC LIMIT 1',
-			values: ['brianc', 'brian.m.carlson@gmail.com'],
+			text: 'SELECT * FROM links ORDER BY id DESC LIMIT 1'
 	  }
 
 		// promise
 		client.query(query)
 			.then(res => {
-				console.log(res.rows)
+				console.log(res.rows[0].url)
 			})
 			.catch(e => {
 				console.error(e.stack)
