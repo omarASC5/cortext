@@ -54,7 +54,7 @@ app.post("/index", (req, res, next) => {
 		// promise
 		client.query(query)
 			.then(res => {
-				console.log(res.rows[0].url)
+				console.log(res.rows.url)
 			})
 			.catch(e => {
 				console.error(e.stack)
