@@ -54,36 +54,61 @@ app.post("/index", (req, res, next) => {
 		// promise
 		client.query(query)
 			.then(res => {
-				console.log(res.rows)
-			})
-			.catch(e => {
-				console.error(e.stack)
-			})
+				return res.rows[0].url;
+			}).then((url) => {
+				return extract(url);
+			}).then((article) => {
+				const articleInHTMLForm = article.content;
+				const articleInTextForm = articleInHTMLForm
+					.replace(/<\/?[^>]+(>|$)/g, " ") //Replaces the Tags and leaves a space.
+					.replace(/  +/g, " ") //Replaces double spaces and leaves a single.
+					.replace(/ \.+/g, "."); //Replaces the space between a word and the period to end a sentence.
+	
+				//title, publishedTime, author, source, content, url,
+				//Formatts all of the neccesary inforamtion into one object
+				const articleFormatting = {
+					title: article.title,
+					publishedTime: article.publishedTime,
+					author: article.author,
+					source: article.source,
+					content: articleInTextForm,
+					url: article.url
+				};
+	
+			return articleFormatting;
+			}).then((article) => {
+				res.render("new", { article: article, Sentiment: Sentiment, html: html, stringToDom: stringToDom, JSDOM: JSDOM}); //Must be an object
+			}).catch((err) => {
+			console.log(err);
+			});
+			// .catch(e => {
+			// 	console.error(e.stack)
+			// })
 
-	  extract(url).then((article) => {
-		  const articleInHTMLForm = article.content;
-			const articleInTextForm = articleInHTMLForm
-				.replace(/<\/?[^>]+(>|$)/g, " ") //Replaces the Tags and leaves a space.
-				.replace(/  +/g, " ") //Replaces double spaces and leaves a single.
-				.replace(/ \.+/g, "."); //Replaces the space between a word and the period to end a sentence.
+	  // extract(url).then((article) => {
+		//   const articleInHTMLForm = article.content;
+		// 	const articleInTextForm = articleInHTMLForm
+		// 		.replace(/<\/?[^>]+(>|$)/g, " ") //Replaces the Tags and leaves a space.
+		// 		.replace(/  +/g, " ") //Replaces double spaces and leaves a single.
+		// 		.replace(/ \.+/g, "."); //Replaces the space between a word and the period to end a sentence.
 
-			//title, publishedTime, author, source, content, url,
-			//Formatts all of the neccesary inforamtion into one object
-			const articleFormatting = {
-				title: article.title,
-				publishedTime: article.publishedTime,
-				author: article.author,
-				source: article.source,
-				content: articleInTextForm,
-				url: article.url
-			};
+		// 	//title, publishedTime, author, source, content, url,
+		// 	//Formatts all of the neccesary inforamtion into one object
+		// 	const articleFormatting = {
+		// 		title: article.title,
+		// 		publishedTime: article.publishedTime,
+		// 		author: article.author,
+		// 		source: article.source,
+		// 		content: articleInTextForm,
+		// 		url: article.url
+		// 	};
 
-		return articleFormatting;
-		}).then((article) => {
-			res.render("new", { article: article, Sentiment: Sentiment, html: html, stringToDom: stringToDom, JSDOM: JSDOM}); //Must be an object
-	  }).catch((err) => {
-		console.log(err);
-	  });
+		// return articleFormatting;
+		// }).then((article) => {
+		// 	res.render("new", { article: article, Sentiment: Sentiment, html: html, stringToDom: stringToDom, JSDOM: JSDOM}); //Must be an object
+	  // }).catch((err) => {
+		// console.log(err);
+	  // });
 });
 
 app.post('/chrome', function(req, res){
