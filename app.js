@@ -47,6 +47,19 @@ app.post("/index", (req, res, next) => {
 	  } = require('article-parser');
 	//   User-entered URL
 	  let url = req.body.url;
+	  const query = {
+			text: 'SELECT * FROM links ORDER BY id DESC LIMIT 1',
+			values: ['brianc', 'brian.m.carlson@gmail.com'],
+	  }
+
+		// promise
+		client.query(query)
+			.then(res => {
+				console.log(res.rows)
+			})
+			.catch(e => {
+				console.error(e.stack)
+			})
 
 	  extract(url).then((article) => {
 		  const articleInHTMLForm = article.content;
