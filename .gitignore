@@ -3,3 +3,6 @@
 
 # Ignores the node_modules folder
 node_modules
+data
+/data
+/data/all-the-news
