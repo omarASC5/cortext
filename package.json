@@ -26,7 +26,6 @@
     "html-parse-stringify": "^1.0.3",
     "jsdom": "^13.2.0",
     "nodemon": "^1.18.10",
-    "pg": "^7.10.0",
     "request": "^2.88.0",
     "sentiment": "^5.0.1",
     "string-to-dom": "^0.1.5"
