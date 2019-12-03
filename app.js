@@ -34,22 +34,25 @@ fs.createReadStream('./data/all-the-news/articles1.csv')
 
     for (let i = 0; i < test.length; i++) {
       article_content = test[i];
-      const textArray = (nlp(article_content).sentences().data()).map((index) => {
+      let textArray = (nlp(article_content).sentences().data()).map((index) => {
         return index.text 
       });
-      
       let wordsScoreArray = [];
-      const wordsArray = []
-      const sentimentScoreSentence = [];
+      let wordsArray = []
+      let sentimentScoreSentence = [];
       for (let i = 0; i < textArray.length; i++) {
         sentimentScoreSentence.push(sentiment.analyze(textArray[i]));
-        wordsArray.push(sentimentScoreSentence.words);
+        wordsArray.push(sentimentScoreSentence[i].words);
       }
+      // console.log(sentimentScoreSentence);
       // console.log(textArray);
       //  Replace wordsArray with allWords array
       for (let j = 0; j < wordsArray.length; j++) {
-        const scores = sentimentScoreSentence.score;
-        wordsScoreArray.push(sentiment.analyze(wordsArray[j]).score);
+        // let scores = sentimentScoreSentence.score;
+        for (let z = 0; z < wordsArray[j].length; z++) {
+          // console.log(wordsArray[j][z])
+          wordsScoreArray.push(sentiment.analyze(wordsArray[j][z]).score);
+        }
       }
       
       //Gets the total number from all of the words I think
@@ -77,6 +80,7 @@ fs.createReadStream('./data/all-the-news/articles1.csv')
     return output;
   }
   
+  // TODO: FIX WHY IS THE SCORE ALWAYS 5 ACTUALLY ZERO?
   console.log(avg)
     }
     // console.log(articles1);
