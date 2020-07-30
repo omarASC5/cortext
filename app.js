@@ -1,189 +1,72 @@
 const express      = require("express"),
-    app        = express(),
-    ejs        = require("ejs"),
-    keys       = require("./config/keys.js"),
-    request    = require("request"),
-    compromise = require("compromise"),
-    bodyParser = require("body-parser"),
-    Sentiment  = require('sentiment'),
-    sentiment  = new Sentiment(),
-    html       = require('html-parse-stringify'),
-    csv        = require('csv-parser'),
-    fs         = require('fs'),
-    brain      = require('brain.js'),
-    stringToDom = require('string-to-dom');
+		app        = express(),
+		ejs        = require("ejs"),
+		keys       = require("./config/keys.js"),
+		request    = require("request"),
+		compromise = require("compromise"),
+		bodyParser = require("body-parser"),
+		Sentiment  = require('sentiment'),
+		sentiment  = new Sentiment(),
+		html       = require('html-parse-stringify'),
+		stringToDom = require('string-to-dom');
 
-    const jsdom = require("jsdom");
-    const { JSDOM } = jsdom;
+		const jsdom = require("jsdom");
+		const { JSDOM } = jsdom;
 
 app.set("view engine", "ejs"); // Rendering engine defined as EJS
 app.use(express.static(__dirname + '/public')); // Tells express, CSS is in public folder
 app.set("views", "views"); // Tells EJS the path to the "views" directory
 app.use(bodyParser.urlencoded({extended: true})); // bodyParser config
 // const sentiment = new Sentiment(); // Set's up thing for sentiment
-let articles1 = []
-fs.createReadStream('./data/all-the-news/articles1.csv')
-.pipe(csv())
-.on('data', (row) => {
-  // columns = row.split(', ')
-  articles1.push(row.content);
-  })
-  .on('end', () => {
-    console.log('Articles 1, CSV Loaded!');
-    const test = articles1.slice(0, 20);
-
-    for (let i = 0; i < test.length; i++) {
-      article_content = test[i];
-      let textArray = (nlp(article_content).sentences().data()).map((index) => {
-        return index.text 
-      });
-      let wordsScoreArray = [];
-      let wordsArray = []
-      let sentimentScoreSentence = [];
-      for (let i = 0; i < textArray.length; i++) {
-        sentimentScoreSentence.push(sentiment.analyze(textArray[i]));
-        wordsArray.push(sentimentScoreSentence[i].words);
-      }
-      // console.log(sentimentScoreSentence);
-      // console.log(textArray);
-      //  Replace wordsArray with allWords array
-      for (let j = 0; j < wordsArray.length; j++) {
-        // let scores = sentimentScoreSentence.score;
-        for (let z = 0; z < wordsArray[j].length; z++) {
-          // console.log(wordsArray[j][z])
-          wordsScoreArray.push(sentiment.analyze(wordsArray[j][z]).score);
-        }
-      }
-      
-      //Gets the total number from all of the words I think
-      var total = 0;
-      const wordsScoreArray_int =  (wordsScoreArray).map(function(x){return parseInt(x)});;
-      for (let i = 0; i < wordsScoreArray_int.length; i++) {
-        total += wordsScoreArray_int[i]+=5;
-      }
-  
-      //All the way at the end Overall Summary
-  var avg = total / wordsScoreArray_int.length;
-  
-  
-  function overallScore(avg) {
-    let output;
-    if (avg > 5.5) {
-      output = "Overall, the article shows a positive slant towards the subject matter.";
-    } else if (avg < 4.5){
-      output = "Overall, the article shows a negative slant towards the subject matter.";
-    }
-    else {
-      output = "Overall, the article shows a neutral slant towards the subject matter.";
-    }
-    console.log(avg);
-    return output;
-  }
-  
-  console.log(avg);
-
-  const network = new brain.recurrent.LSTM();
-  const trainingData = test.map(item => ({
-    input: item,
-    output: avg
-  }))
-  // console.log(trainingData);
-  network.train(trainingData, {
-    iterations: 5
-  });
-  test_article = "The 123-page document written by GOP members on three House committees formalized the President's own cycle of distraction and denial that he used out to ride out the Russia scandal.  He's using the same tactic to save his job now he's faced with impeachment over his political pressure on Ukraine.  Trump isn't waiting to hear the formal case against him because he doesn't have to.  Ultimately, it will make little difference since his defense was long ago unmoored from fact and is based on selling a disinformational narrative to his followers that sows confusion and devalues truth for everyone else.  The message of the document -- less a defense of Trump on the merits but rather an endorsement of his counterfactual denials -- was simple: Nothing Trump did when it came to Ukraine was wrong, the report said.  His scheme run by personal lawyer Rudy Giuliani to coerce Ukraine to investigate a political foe, Joe Biden, was just fine, according to the partisan document.  Contrary to what top officials testified, there was no quid pro quo, House Republicans claim.  And the whole Ukraine drama amounts to a coup by his deep state enemies -- despite an avalanche of evidence otherwise.  The report, which ignores significant and incriminating testimony against Trump, is a clear sign of confidence among Republicans that the pro-Trump conservative coalition will hold and that despite the apparent strength of the Democratic case, it will not cause a political earthquake in a tribalized nation that could see the President ousted.  The report's refusal to even acknowledge any inappropriate behavior by Trump -- in the face of direct evidence -- also offers a marker for how Republicans may approach an eventual Senate impeachment trial.  The report is so overtly partisan that it may undermine its own effectiveness among all but the President's strongest supporters.  I think they overplayed their hand, whatever hand they had, said Ryan Goodman, a former Defense Department special counsel on Erin Burnett OutFront.' 'It defies what we just learned in the past two weeks in the public hearings,' he said, citing testimony of Trump-appointed officials alarmed by the President's behavior.  In a significant evolution of the defense of the President that tests the GOP's credibility, the report argued there was nothing wrong in Trump's concern about business activities of Joe Biden's son Hunter in Ukraine -- even though there is no evidence of wrongdoing and the President stood to gain politically.  A jury that has made up its mind The House GOP rebuttal was an example of what lawyers do -- frame a counter-narrative to the prosecution case using selective evidence to paint their client in a favorable light.  It encapsulated many GOP complaints about the Democratic process aired during televised impeachment hearings last month.  'The evidence presented does not prove any of these Democrat allegations and none of the Democrats' witnesses testified to having evidence of bribery, extortion or any high crime or misdemeanor,' the report released on Monday said.  But the report's function was primarily political.  Unlike a defense lawyer's appeal to a jury, this read more like a case designed specifically to people who had already made up their mind -- the Trump-voting American public that they hope is large enough to save the presidency.  As such, it will tell a tale for history of the current political moment in which the President gambled on ruling by division rather than uniting the nation in a broad coalition.  The 123-page document formalized the President's own cycle of distraction and denial that he used out to ride out the Russia scandal and plans to wield to save his job over Ukraine.  It's a political maneuver in which Trump does not contest facts -- he categorically calls on supporters to ignore the evidence of their own eyes and blows smoke to thwart wider understanding.  This was most clear when the GOP report addressed the call with Ukrainian President Volodymyr Zelensky on July 25 when he asked for a 'favor' -- a probe into a 2016 conspiracy theory that Ukraine meddled in the election and suggested Kiev also look in the activity of the Bidens.  The report however, barely credibly, describes the rough transcript of the call as reflecting 'laughter, pleasantries and cordiality.' It also takes Trump's own claim that there was no pressure on Zelensky on the call as credible evidence there was none.  In this, the report contradicts clearly established facts and Trump's habit of crushing the constraints of his office in public view.  As well as the evidence of the call, White House acting chief of staff Mick Mulvaney has publicly said that aid quid pro quos are a normal part of foreign policy and told reporters to 'get over it.' Trump said at the White House on October 3 that if Ukraine was 'honest' it would investigate the Bidens, in a possible abuse of his authority in shaping foreign policy for personal political gain.  Adopting Trump's vision of the presidency, the report kept faith with Trump's mantra of never admitting a scintilla of wrongdoing.  It said Trump had a deep seated suspicion of corruption in Ukraine -- though one witness, US diplomat David Holmes, said he was told by the US ambassador to the Ukraine that Trump only cared about 'big stuff' like investigating Biden.  The 'deep state' is back The GOP report also fleshed out a narrative of a thwarted 'deep state' coup inside the US government and conspiracies that Trump and conservative media allies have been spreading even before he took office as a glue to firm up his voting base.  Though written in legalese, the report often appeared to formalize the President's Twitter feeds and the monologues of conservative news show hosts who support the President.  'The Democrats are trying to impeach a duly elected President based on the accusations of assumptions of unelected bureaucrats who disagreed with President Trump's policy initiatives and processes,' the report read.  'They are trying to impeach President Trump because some unelected bureaucrats chafed at an elected President's 'outside the beltway' approach to diplomacy.' Current and former US officials testified last month that they were shocked at Trump's efforts to hijack foreign policies based on long understood interests for his own political gain.  Trump has used similar fact-bending defenses for years.  The reappearance on the scene this weekend, for instance, of the former FBI agent Lisa Page — who was accused of political bias against the President in the Russia investigation -- let him revive a familiar unfounded conspiracy theory against the FBI.  The President did not take long to demonstrate the political game at work over impeachment Monday -- sending a tweet from Britain where he just landed for a NATO meeting.  Activating a mutual cycle of reinforcement with GOP allies, Trump warmly praised the GOP allies who wrote it and who rely on his support for their careers.  'I read the Republicans Report on the impeachment hoax.  great job!  Radical Left has no CASE.  Read the Transcripts.  Shouldn't even be allowed.  Can we go to supreme Court to stop?' he tweeted.  Trump used the same attaboy tactic to praise Sen. John Kennedy, a Louisiana Republican who again suggested equivalence between critical comments about Trump from some Ukrainian officials and a state-sponsored Russian spy operation targeting the 2016 election.  And the President's daily cycle of disinformation whirled on with his selective quote from an interview with Time Magazine and several European outlets in which Zelensky denied he discussed a quid pro quo with the President but appeared to rebuke him for holding back aid when his government is waging a bitter war with pro-Russian separatists.  'thank you to President Zelensky.  Case over.  The Do Nothing Democrats should finally go back to work!' Trump wrote.  Democrats to vote on the report Democrats on Monday made available their report detailing the case about Trump to members for viewing.  The House Intelligence Committee is expected to formally hand the case to the House Judiciary Committee on Tuesday, ahead of the panel's scheduled first impeachment hearing on Wednesday.  Trump's lawyers have elected not to attend the meeting -- a move possibly designed to suggest a consideration of the merits of impeachment is illegitimate.  House Judiciary Chairman Jerrold Nadler on Monday released the witness list for the meeting.  The witnesses are all constitutional law experts: Noah Feldman, Pamela S. Karlan, Michael Gerhardt and Jonathan Turley -- professors, respectively, at Harvard, Stanford, North Carolina and George Washington university law schools.";
-  const output = network.run(test_article);
-  console.log(output);
-    }
-    // console.log(articles1);
-    // for (let i = 0; i < articles1.length; i++) {
-      // console.log(articles1[i])
-      // console.log((articles1[i]).split(',', 10))
-    // }
-    // console.log(columns);
-  });
-
-// let articles2 = []
-// fs.createReadStream('./data/all-the-news/articles1.csv')
-//   .pipe(csv())
-//   .on('data', (row) => {
-//     articles2.push(row);
-// })
-// .on('end', () => {
-//   console.log('Articles 2, CSV Loaded!');
-//   // console.log(article2);
-  
-// });
-
-// let articles3 = []
-// let trainingData = []
-// fs.createReadStream('./data/all-the-news/articles1.csv')
-//   .pipe(csv())
-//   .on('data', (row) => {
-//     articles3.push(row);
-// })
-// .on('end', () => {
-//   console.log('Articles 3, CSV Loaded!');
-//   // console.log(article2);
-//   trainingData = articles1.concat(articles2, articles3);
-// });
-
-
-// test_article = '"After the bullet shells get counted, the blood dries and the votive candles burn out, people peer down from   windows and see crime scenes gone cold: a band of yellow police tape blowing in the breeze. The South Bronx, just across the Harlem River from Manhattan and once shorthand for urban dysfunction, still suffers violence at levels long ago slashed in many other parts of New York City. And yet the city’s efforts to fight it remain splintered, underfunded and burdened by scandal. In the 40th Precinct, at the southern tip of the Bronx, as in other poor, minority neighborhoods across the country, people long hounded for   infractions are crying out for more protection against grievous injury or death. By September, four of every five shootings in the precinct this year were unsolved. Out of the city’s 77 precincts, the 40th has the highest murder rate but the fewest detectives per violent crime, reflecting disparities in staffing that hit hardest in some neighborhoods outside Manhattan, according to a New York Times analysis of Police Department data. Investigators in the precinct are saddled with twice the number of cases the department recommends, even as their bosses are called to Police Headquarters to answer for the sharpest crime rise in the city this year. And across the Bronx, investigative resources are squeezed. It has the highest   rate of the city’s five boroughs but the thinnest detective staffing. Nine of the 14   precinct detective squads for violent crime in the city are there. The borough’s robbery squad is smaller than Manhattan’s, even though the Bronx has had 1, 300 more cases this year. And its homicide squad has one detective for every four murders, compared with one detective for roughly every two murders in Upper Manhattan and more than one detective per murder in Lower Manhattan. In   lobbies and   family apartments, outside methadone clinics and art studios, people take note of the inequity. They hear police commanders explain that they lack the resources to place a floodlight on a dangerous block or to post officers at a   corner. They watch witnesses cower behind   doors, more fearful of a gunman’s crew than confident in the Police Department’s ability to protect them. So though people see a lot, they rarely testify. And in the South Bronx, as in so many predominantly black and Hispanic neighborhoods like it in the United States, the contract between the police and the community is in tatters. Some people have stories of crime reports that were ignored, or 911 calls that went unanswered for hours. Others tell of a 911 call for help ending in the caller’s arrest, or of a minor charge leading to 12 hours in a fetid holding cell. This is the paradox of policing in the 40th Precinct. Its neighborhoods have historically been prime targets for aggressive tactics, like    that are designed to ward off disorder. But precinct detectives there have less time than anywhere else in the city to answer for the blood spilled in violent crimes. Gola White, who was beside her daughter when she was shot and killed in a playground this summer, four years after her son was gunned down in the same housing project, ticked off the public safety resources that she said were scant in Bronx neighborhoods like hers: security cameras, lights, locks, investigating police officers. “Here, we have nothing,” she said. When it comes to “  families,” she said, the authorities “don’t really care as much. That’s how I feel. ” The Times has been documenting the murders logged this year in the 40th Precinct, one of a handful of neighborhoods where deadly violence remains a problem in an era of   crime in New York City. The homicides  —   14 in the precinct this year, up from nine in 2015  —   strain detectives, and when they go unsolved, as half of them have this year, some look to take the law into their own hands. From hundreds of conversations with grieving relatives and friends, witnesses and police officers, the social forces that flare into murder in a place like the 40th Precinct become clearer: merciless gang codes, mental illness, drugs and long memories of feuds that simmered out of officers’ view. The reasons some murders will never be solved also emerge: paralyzing fear of retribution, victims carrying secrets to their graves and relentless casework that forces detectives to move on in hopes that a break will come later. Frustrations build on all sides. Detectives’ phones rarely ring with tips, and officers grow embittered with witnesses who will not cooperate. In the meantime, a victim’s friends conduct their own investigations, and talk of grabbing a stash gun from a wheel well or a mother’s apartment when they find their suspect. In the chasm between the police and the community, gangs and gun violence flourish. Parents try to protect their families from drug crews’ threats, and officers work to overcome the residue of years of mistrust and understaffing in communities where they still go racing from one 911 call to the next. The streets around St. Mary’s Park were the scene of two fatal shootings logged in the 40th Precinct this year. Both are unsolved. James Fernandez heard talk of the murders through the door of his   apartment on East 146th Street in a     the Betances Houses. He lived at the end of a long hallway strewn with hypodermic needles, empty dope bags and discarded Hennessy bottles. A   young men who spoke of being in a subset of the Bloods gang had made it their drug market, slinging marijuana and cocaine to regulars, flashing firearms and blowing smoke into the Fernandez apartment. When Mr. Fernandez, 40, asked the young men to move, they answered by busting up his car. This kind of crime, an anachronism in much of New York, still rattles the 40th Precinct, even though murders there have fallen to 14 this year from 83 in 1991. It has more major felony crimes per resident than any other residential district in the city. It is also one of the poorest communities in the country, and many young men find their way into underground markets. Mr. Fernandez was not one to shrink from the threats. When he was growing up on the Lower East Side, he rode his bicycle around to the customers of the drug dealers he worked for and collected payments in a backpack. After leaving that life, he got a tech maintenance job and, three years ago, moved into the Betances Houses with his wife and daughter, now 11. He had two choices to get help with the drug crew: call the police for help and risk being labeled a snitch, or call his old Lower East Side bosses for muscle and risk violence. He chose the police. Again and again, he walked into a local substation, Police Service Area 7, and asked for protection. His daughter was using an inhaler to relieve coughs from the marijuana smoke. Mr. Fernandez and his wife got terrible headaches. “There’s a lot of killers here, and we are going to kill you,” a sergeant’s police report quoted a    telling Mr. Fernandez in August 2015. A second report filed the same day said a    warned him, “I’m going to shoot through your window. ” Mr. Fernandez told the police both the teenagers’ names, which appear in the reports, and then went home. He said one of their friends had seen him walk into the substation, and they tried to intimidate him out of filing another report. Three days later, the same    propped his bike on their door, “then said if I was to open the door and say something, they would body slam me,” Mr. Fernandez’s wife, Maria Fernandez, wrote on slips of paper she used to document the hallway ruckus and the inadequate police response. The boys made comments about how easy a target she was and about how they would have to “slap” her if she opened the door while they made a drug sale, and they threatened to beat the Fernandez family because “they are the ones snitching,” her notes say. But another   complaint at the substation, 10 days after the first, brought no relief. A week later, feeling desperate, Ms. Fernandez tried calling: first to the substation, at 8:50 p. m. when one of the boys blew weed smoke at her door and made a   threat to attack her, and then to 911 at 10:36 p. m. The police never came, she wrote in her notes. She tried the 40th Precinct station house next, but officers at the desk left her standing in the public waiting area for a   she said, making her fear being seen again. Officers put her in worse danger some months later, she said, when they came to her door and announced in front of the teenagers that they were there on a complaint about drug activity. Mr. Fernandez started doing the work that he said the police had failed to do. He wired a camera into his peephole to record the drugs and guns. The footage hark back to the New York of the 1980s, still very much present to some of the precinct’s residents. Around 6:30 each morning, Sgt. Michael J. LoPuzzo walks through the tall wooden doors of the 40th Precinct station house. The cases that land on his metal desk  —   dead bodies with no known cause, strip club brawls, shooting victims hobbling into the hospital themselves  —   bring resistance at every turn, reminding him of an earlier era in the city’s   campaign. “I haven’t got one single phone call that’s putting me in the right direction here,” said Sergeant LoPuzzo, the head of the precinct’s detective squad, one day this summer as he worked on an answer to an email inquiry from a murder victim’s aunt about why the killer had not been caught. “And people just don’t understand that. ” Often it is detectives who most feel the effects of people turning on the police. Witnesses shout them away from their doors just so neighbors know they refuse to talk. Of the 184 people who were shot and wounded in the Bronx through early September, more than a third  —   66 victims  —   refused to c';
-
-
-
-
-
 
 // Index Route, redirects to display homepage
 app.get("/", (req, res, next) => {
-  res.redirect("index");
+	res.redirect("index");
 });
 
 // Renders the index page
 app.get("/index", (req, res, next) => {
-  res.render("index");
+	res.render("index");
 })
 
 
 // Post route, the forms sends a URL to be exported as an object with article feautures 
 app.post("/index", (req, res, next) => {
-  // Initializes article-parser, which helps parse articles into object forme
-  const {
-    extract 
-    } = require('article-parser');
-  //   User-entered URL
-    let url = req.body.url;
+	// Initializes article-parser, which helps parse articles into object forme
+	const {
+		extract 
+	  } = require('article-parser');
+	//   User-entered URL
+	  let url = req.body.url;
 
-    extract(url).then((article) => {
-      const articleInHTMLForm = article.content;
-      const articleInTextForm = articleInHTMLForm
-        .replace(/<\/?[^>]+(>|$)/g, " ") //Replaces the Tags and leaves a space.
-        .replace(/  +/g, " ") //Replaces double spaces and leaves a single.
-        .replace(/ \.+/g, "."); //Replaces the space between a word and the period to end a sentence.
+	  extract(url).then((article) => {
+		  const articleInHTMLForm = article.content;
+			const articleInTextForm = articleInHTMLForm
+				.replace(/<\/?[^>]+(>|$)/g, " ") //Replaces the Tags and leaves a space.
+				.replace(/  +/g, " ") //Replaces double spaces and leaves a single.
+				.replace(/ \.+/g, "."); //Replaces the space between a word and the period to end a sentence.
 
-      //title, publishedTime, author, source, content, url,
-      //Formatts all of the neccesary inforamtion into one object
-      const articleFormatting = {
-        title: article.title,
-        publishedTime: article.publishedTime,
-        author: article.author,
-        source: article.source,
-        content: articleInTextForm,
-        url: article.url
-      };
+			//title, publishedTime, author, source, content, url,
+			//Formatts all of the neccesary inforamtion into one object
+			const articleFormatting = {
+				title: article.title,
+				publishedTime: article.publishedTime,
+				author: article.author,
+				source: article.source,
+				content: articleInTextForm,
+				url: article.url
+			};
 
-    return articleFormatting;
-    }).then((article) => {
-      res.render("new", { article: article, Sentiment: Sentiment, html: html, stringToDom: stringToDom, JSDOM: JSDOM}); //Must be an object
-    }).catch((err) => {
-    console.log(err);
-    });
+		return articleFormatting;
+		}).then((article) => {
+			res.render("new", { article: article, Sentiment: Sentiment, html: html, stringToDom: stringToDom, JSDOM: JSDOM}); //Must be an object
+	  }).catch((err) => {
+		console.log(err);
+	  });
 });
 
 
 // Server Setup/Initialization
 app.listen(process.env.PORT || keys.PORT, () => {
-  console.log(`Server running on port ${keys.PORT}!`);
+	console.log(`Server running on port ${keys.PORT}!`);
 });
