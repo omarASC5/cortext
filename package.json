@@ -20,13 +20,11 @@
   "dependencies": {
     "article-parser": "^2.4.0",
     "body-parser": "^1.18.3",
-    "compromise": "^11.13.1",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "html-parse-stringify": "^1.0.3",
     "jsdom": "^13.2.0",
-    "nodemon": "^1.18.10",
-    "request": "^2.88.0",
+    "nodemon": "^1.19.4",
     "sentiment": "^5.0.1",
     "string-to-dom": "^0.1.5"
   }
