@@ -22,7 +22,7 @@
     "body-parser": "^1.18.3",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
-    "html-parse-stringify": "^1.0.3",
+    "html-parse-stringify": "^2.0.1",
     "jsdom": "^13.2.0",
     "nodemon": "^1.19.4",
     "sentiment": "^5.0.1",
